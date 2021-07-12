@@ -1,0 +1,26 @@
+{
+  "name": "react-native-alarm-manager",
+  "version": "1.0.0",
+  "description": "Alarm manager in React Native",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baekgol/react-native-alarm-manager.git"
+  },
+  "keywords": [
+    "react-native",
+    "alarm"
+  ],
+  "author": "baekgol <changu13@naver.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/baekgol/react-native-alarm-manager/issues"
+  },
+  "homepage": "https://github.com/baekgol/react-native-alarm-manager#readme"
+}

@@ -1,1 +1,1 @@
-# react-native-alarm
+# react-native-alarm-manager

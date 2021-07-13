@@ -100,10 +100,6 @@ public class AlarmModule extends ReactContextBaseJavaModule {
           alarmIntent.putExtra("name", alarm.getAlarmName());
           alarmIntent.putExtra("sound", alarm.getAlarmSound());
           alarmIntent.putExtra("vibration", alarm.isAlarmVibration());
-          alarmIntent.putExtra("photo", alarm.isAlarmPhoto());
-          alarmIntent.putExtra("rps", alarm.isAlarmRps());
-          alarmIntent.putExtra("math", alarm.getAlarmMath());
-          alarmIntent.putExtra("card", alarm.getAlarmCard());
           alarmIntent.putExtra("hour", hour);
           alarmIntent.putExtra("minute", minute);
 
@@ -224,10 +220,6 @@ public class AlarmModule extends ReactContextBaseJavaModule {
             alarmIntent.putExtra("id", newAlarm.getAlarmId());
             alarmIntent.putExtra("name", newAlarm.getAlarmName());
             alarmIntent.putExtra("sound", newAlarm.getAlarmSound());
-            alarmIntent.putExtra("photo", newAlarm.isAlarmPhoto());
-            alarmIntent.putExtra("rps", newAlarm.isAlarmRps());
-            alarmIntent.putExtra("math", newAlarm.getAlarmMath());
-            alarmIntent.putExtra("card", newAlarm.getAlarmCard());
             alarmIntent.putExtra("hour", hour);
             alarmIntent.putExtra("minute", minute);
 
@@ -320,10 +312,6 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     wm.putString("alarm_name", dto.getAlarmName());
     wm.putString("alarm_sound", dto.getAlarmSound());
     wm.putBoolean("alarm_vibration", dto.isAlarmVibration());
-    wm.putInt("alarm_math", dto.getAlarmMath());
-    wm.putInt("alarm_card", dto.getAlarmCard());
-    wm.putBoolean("alarm_photo", dto.isAlarmPhoto());
-    wm.putBoolean("alarm_rps", dto.isAlarmRps());
     wm.putBoolean("alarm_activate", dto.isAlarmActivate());
 
     return wm;
@@ -346,10 +334,6 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     newAlarm.setAlarmSound(rm.getString("alarm_sound"));
     newAlarm.setAlarmTime(Time.valueOf(rm.getString("alarm_time")));
     newAlarm.setAlarmVibration(rm.getBoolean("alarm_vibration"));
-    newAlarm.setAlarmPhoto(rm.getBoolean("alarm_photo"));
-    newAlarm.setAlarmRps(rm.getBoolean("alarm_rps"));
-    newAlarm.setAlarmMath(rm.getInt("alarm_math"));
-    newAlarm.setAlarmCard(rm.getInt("alarm_card"));
     newAlarm.setAlarmActivate(rm.getBoolean("alarm_activate"));
 
     return newAlarm;

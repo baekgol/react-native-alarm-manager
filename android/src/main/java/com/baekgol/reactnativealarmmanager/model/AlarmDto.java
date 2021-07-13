@@ -33,22 +33,6 @@ public class AlarmDto {
     @ColumnInfo(name="alarm_activate", defaultValue = "true")
     private boolean alarmActivate;
 
-    @NonNull
-    @ColumnInfo(name="alarm_math", defaultValue = "2")
-    private int alarmMath;
-
-    @NonNull
-    @ColumnInfo(name="alarm_card", defaultValue = "2")
-    private int alarmCard;
-
-    @NonNull
-    @ColumnInfo(name="alarm_photo", defaultValue = "false")
-    private boolean alarmPhoto;
-
-    @NonNull
-    @ColumnInfo(name="alarm_rps", defaultValue = "false")
-    private boolean alarmRps;
-
     public int getAlarmId() {
         return alarmId;
     }
@@ -93,38 +77,6 @@ public class AlarmDto {
         this.alarmActivate = alarmActivate;
     }
 
-    public int getAlarmMath() {
-        return alarmMath;
-    }
-
-    public void setAlarmMath(int alarmMath) {
-        this.alarmMath = alarmMath;
-    }
-
-    public int getAlarmCard() {
-        return alarmCard;
-    }
-
-    public void setAlarmCard(int alarmCard) {
-        this.alarmCard = alarmCard;
-    }
-
-    public boolean isAlarmPhoto() {
-        return alarmPhoto;
-    }
-
-    public void setAlarmPhoto(boolean alarmPhoto) {
-        this.alarmPhoto = alarmPhoto;
-    }
-
-    public boolean isAlarmRps() {
-        return alarmRps;
-    }
-
-    public void setAlarmRps(boolean alarmRps) {
-        this.alarmRps = alarmRps;
-    }
-
     @Override
     public String toString() {
         return "AlarmDto{" +
@@ -134,10 +86,6 @@ public class AlarmDto {
                 ", alarmSound='" + alarmSound +
                 ", alarmVibration='" + alarmVibration +
                 ", alarmActivate=" + alarmActivate +
-                ", alarmMath=" + alarmMath +
-                ", alarmCard=" + alarmCard +
-                ", alarmPhoto=" + alarmPhoto +
-                ", alarmRps=" + alarmRps +
                 '}';
     }
 }

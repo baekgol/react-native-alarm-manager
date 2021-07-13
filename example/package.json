@@ -16,7 +16,8 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-svg": "^12.1.1",
     "styled-components": "^5.3.0",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "react-native-alarm-manager": "file:../"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

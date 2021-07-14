@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Vibration} from 'react-native';
 import {
   NativeBaseProvider,
@@ -19,10 +19,10 @@ import Alarm from 'react-native-alarm-manager';
 const App = () => {
   const hours = [];
   const minutes = [];
-  const soundPlayerList = [];
   const [date, setDate] = useState(new Date());
   const [sound, setSound] = useState('0');
   const [isVibration, setIsVibration] = useState(true);
+  const [soundPlayerList, setSoundPlayerList] = useState(null);
 
   const soundList = [
     {name: 'Adventure', src: 'adventure'},
@@ -37,16 +37,23 @@ const App = () => {
     else minutes.push(i + '');
   }
 
-  for (let i = 0; i < 3; i++)
-    soundPlayerList.push(
-      new Sound(soundList[i].src + '.mp3', Sound.MAIN_BUNDLE),
-    );
+  useEffect(() => {
+    const soundPlayers = [];
+
+    for (let i = 0; i < 3; i++)
+      soundPlayers.push(
+        new Sound(soundList[i].src + '.mp3', Sound.MAIN_BUNDLE),
+      );
+
+    setSoundPlayerList(soundPlayers);
+  }, []);
 
   const dateToTime = currDate => {
     return moment(currDate).format('HH:mm:00') + '';
   };
 
   const selectSound = value => {
+    console.log(soundPlayerList);
     soundPlayerList[sound].stop();
     setSound(value);
     soundPlayerList[value].setVolume(1.0).play();

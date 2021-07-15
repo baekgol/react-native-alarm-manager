@@ -28,7 +28,9 @@ const App = () => {
   const minutes = [];
   const [date, setDate] = useState(new Date());
   const [sound, setSound] = useState('0');
-  const [isVibration, setIsVibration] = useState(true);
+  const [modifySound, setModifySound] = useState('0');
+  const [isCreateVibration, setIsCreateVibration] = useState(true);
+  const [isModifyVibration, setIsModifyVibration] = useState(true);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [isListModal, setIsListModal] = useState(false);
   const [isModifyModal, setIsModifyModal] = useState(false);
@@ -70,21 +72,40 @@ const App = () => {
     return moment(currDate).format('HH:mm:00') + '';
   };
 
-  const selectSound = value => {
-    console.log(soundPlayerList);
+  const selectCreateSound = value => {
     soundPlayerList[sound].stop();
     setSound(value);
     soundPlayerList[value].setVolume(1.0).play();
   };
 
-  const toggleVibration = () => {
-    setIsVibration(!isVibration);
-    if (!isVibration) Vibration.vibrate();
+  const toggleCreateVibration = () => {
+    setIsCreateVibration(!isCreateVibration);
+    if (!isCreateVibration) Vibration.vibrate();
+  };
+
+  const selectModifySound = value => {
+    soundPlayerList[modifySound].stop();
+    setModifySound(value);
+    soundPlayerList[value].setVolume(1.0).play();
+  };
+
+  const toggleModifyVibration = () => {
+    setIsModifyVibration(!isModifyVibration);
+    if (!isModifyVibration) Vibration.vibrate();
+  };
+
+  const closeModifyModal = () => {
+    soundPlayerList[modifySound].stop();
+    setModifySound('0');
+    setIsModifyModal(false);
   };
 
   const getListModal = () => {
     return (
-      <Modal isOpen={isListModal} onClose={() => setIsListModal(false)}>
+      <Modal
+        isOpen={isListModal}
+        onClose={() => setIsListModal(false)}
+        closeOnOverlayClick={false}>
         <Modal.Content maxWidth="400px">
           <Modal.Header>Alarm List</Modal.Header>
           <Modal.Body>
@@ -149,7 +170,10 @@ const App = () => {
 
   const getModifyModal = () => {
     return (
-      <Modal isOpen={isModifyModal} onClose={() => setIsModifyModal(false)}>
+      <Modal
+        isOpen={isModifyModal}
+        onClose={() => closeModifyModal()}
+        closeOnOverlayClick={false}>
         <Modal.Content maxWidth="400px">
           <Modal.CloseButton />
           <Modal.Header>Alarm Modification</Modal.Header>
@@ -176,12 +200,13 @@ const App = () => {
                 <Input
                   variant="outline"
                   placeholder="Alarm Name"
+                  onChangeText={value => setModifyName(value)}
                   style={{marginBottom: 20}}
                 />
                 <Heading size="md">Sound</Heading>
                 <Select
-                  selectedValue={sound}
-                  onValueChange={value => selectSound(value)}>
+                  selectedValue={modifySound}
+                  onValueChange={value => selectModifySound(value)}>
                   <Select.Item label="Adventure" value="0" />
                   <Select.Item label="Bliss" value="1" />
                   <Select.Item label="The Inspiration" value="2" />
@@ -193,8 +218,8 @@ const App = () => {
                   <Switch
                     size="lg"
                     colorScheme="emerald"
-                    isChecked={isVibration}
-                    onToggle={() => toggleVibration()}
+                    isChecked={isCreateVibration}
+                    onToggle={() => toggleModifyVibration()}
                     style={{marginLeft: 50}}
                   />
                 </HStack>
@@ -218,7 +243,7 @@ const App = () => {
   const showList = () => {
     Alarm.searchAll(
       success => {
-        console.log(success);
+        soundPlayerList[sound].stop();
         setAlarmList(success);
         setIsListModal(true);
       },
@@ -271,12 +296,13 @@ const App = () => {
             <Input
               variant="outline"
               placeholder="Alarm Name"
+              onChangeText={value => setCreateName(value)}
               style={{marginBottom: 20}}
             />
             <Heading size="md">Sound</Heading>
             <Select
               selectedValue={sound}
-              onValueChange={value => selectSound(value)}>
+              onValueChange={value => selectCreateSound(value)}>
               <Select.Item label="Adventure" value="0" />
               <Select.Item label="Bliss" value="1" />
               <Select.Item label="The Inspiration" value="2" />
@@ -288,8 +314,8 @@ const App = () => {
               <Switch
                 size="lg"
                 colorScheme="emerald"
-                isChecked={isVibration}
-                onToggle={() => toggleVibration()}
+                isChecked={isCreateVibration}
+                onToggle={() => toggleCreateVibration()}
                 style={{marginLeft: 50}}
               />
             </HStack>

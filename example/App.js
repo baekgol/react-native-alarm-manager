@@ -10,6 +10,13 @@ import {
   Input,
   Select,
   Switch,
+  Button,
+  Modal,
+  Text,
+  Tag,
+  IconButton,
+  InfoOutlineIcon,
+  SmallCloseIcon,
 } from 'native-base';
 import {TimePicker} from 'react-native-wheel-picker-android';
 import moment from 'moment';
@@ -23,6 +30,17 @@ const App = () => {
   const [sound, setSound] = useState('0');
   const [isVibration, setIsVibration] = useState(true);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
+  const [isListModal, setIsListModal] = useState(false);
+  const [isModifyModal, setIsModifyModal] = useState(false);
+  const [alarmList, setAlarmList] = useState([]);
+
+  const alarmInfo = {
+    alarm_time: '19:59:00',
+    alarm_name: '',
+    alarm_sound: 'adventure',
+    alarm_vibration: true,
+    alarm_activate: true,
+  };
 
   const soundList = [
     {name: 'Adventure', src: 'adventure'},
@@ -64,26 +82,156 @@ const App = () => {
     if (!isVibration) Vibration.vibrate();
   };
 
-  const alarmInfo = {
-    alarm_time: '19:59:00',
-    alarm_name: '',
-    alarm_sound: 'adventure',
-    alarm_vibration: true,
-    alarm_activate: true,
+  const getListModal = () => {
+    return (
+      <Modal isOpen={isListModal} onClose={() => setIsListModal(false)}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Header>Alarm List</Modal.Header>
+          <Modal.Body>
+            <VStack>
+              {alarmList.map(alarm => {
+                const hour = alarm.alarm_time.substring(0, 2);
+                const minute = alarm.alarm_time.substring(3, 5);
+
+                return (
+                  <HStack
+                    w="100%"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    key={alarm.alarm_id}>
+                    <Tag
+                      colorScheme="emerald"
+                      size="sm"
+                      rounded={'full'}
+                      variant="outline"
+                      style={{
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        borderWidth: 2,
+                      }}>
+                      <Text fontSize={20} bold>
+                        {`${hour}:${minute}`}
+                      </Text>
+                    </Tag>
+                    <Text fontSize={20} isTruncated>
+                      {alarm.alarm_name}
+                    </Text>
+                    <HStack>
+                      <IconButton
+                        colorScheme="emerald"
+                        icon={<InfoOutlineIcon />}
+                        onPress={() => setIsModifyModal(true)}
+                      />
+                      <IconButton
+                        colorScheme="secondary"
+                        icon={<SmallCloseIcon />}
+                        onPress={() => console.log('aaa')}
+                      />
+                    </HStack>
+                  </HStack>
+                );
+              })}
+            </VStack>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="ghost"
+              onPress={() => {
+                setIsListModal(false);
+              }}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
+    );
+  };
+
+  const getModifyModal = () => {
+    return (
+      <Modal isOpen={isModifyModal} onClose={() => setIsModifyModal(false)}>
+        <Modal.Content maxWidth="400px">
+          <Modal.CloseButton />
+          <Modal.Header>Alarm Modification</Modal.Header>
+          <Modal.Body>
+            <Center style={{paddingTop: 20}}>
+              <VStack space={5}>
+                <Heading size="md">Time</Heading>
+                <TimePicker
+                  initDate={date}
+                  hours={hours}
+                  minutes={minutes}
+                  onTimeSelected={currDate => {
+                    setDate(currDate);
+                    dateToTime(currDate);
+                  }}
+                  style={{height: 200, width: 100}}
+                  itemTextSize={25}
+                  selectedItemTextSize={30}
+                  selectedItemTextColor={'#333333'}
+                  itemTextColor={'#bbbbbb'}
+                  hideIndicator
+                />
+                <Heading size="md">Name</Heading>
+                <Input
+                  variant="outline"
+                  placeholder="Alarm Name"
+                  style={{marginBottom: 20}}
+                />
+                <Heading size="md">Sound</Heading>
+                <Select
+                  selectedValue={sound}
+                  onValueChange={value => selectSound(value)}>
+                  <Select.Item label="Adventure" value="0" />
+                  <Select.Item label="Bliss" value="1" />
+                  <Select.Item label="The Inspiration" value="2" />
+                </Select>
+                <HStack
+                  justifyContent="space-between"
+                  style={{marginTop: 20, marginBottom: 20}}>
+                  <Heading size="md">Vibration</Heading>
+                  <Switch
+                    size="lg"
+                    colorScheme="emerald"
+                    isChecked={isVibration}
+                    onToggle={() => toggleVibration()}
+                    style={{marginLeft: 50}}
+                  />
+                </HStack>
+              </VStack>
+            </Center>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="ghost"
+              onPress={() => {
+                setIsModifyModal(false);
+              }}>
+              Modify
+            </Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
+    );
+  };
+
+  const showList = () => {
+    Alarm.searchAll(
+      success => {
+        console.log(success);
+        setAlarmList(success);
+        setIsListModal(true);
+      },
+      fail => {
+        console.log(fail);
+      },
+    );
   };
 
   // Alarm.schedule(
   //   alarmInfo,
   //   success => {
-  //     console.log('schedule success');
-  //     Alarm.searchAll(
-  //       success => {
-  //         console.log(success);
-  //       },
-  //       fail => {
-  //         console.log(fail);
-  //       },
-  //     );
+
   //   },
   //   fail => {
   //     alert(fail);
@@ -92,7 +240,15 @@ const App = () => {
 
   return (
     <NativeBaseProvider>
-      <Center paddingTop={50}>
+      <Center style={{paddingTop: 20}}>
+        {getListModal()}
+        {getModifyModal()}
+        <Button
+          variant="ghost"
+          onPress={() => showList()}
+          style={{alignSelf: 'flex-end', marginRight: 20}}>
+          Alarm List
+        </Button>
         <Container>
           <VStack space={5}>
             <Heading size="md">Time</Heading>
@@ -125,16 +281,19 @@ const App = () => {
               <Select.Item label="Bliss" value="1" />
               <Select.Item label="The Inspiration" value="2" />
             </Select>
-            <HStack style={{marginTop: 20}}>
+            <HStack
+              justifyContent="space-between"
+              style={{marginTop: 20, marginBottom: 20}}>
               <Heading size="md">Vibration</Heading>
               <Switch
                 size="lg"
                 colorScheme="emerald"
-                marginLeft={50}
                 isChecked={isVibration}
                 onToggle={() => toggleVibration()}
+                style={{marginLeft: 50}}
               />
             </HStack>
+            <Button>Create Alarm</Button>
           </VStack>
         </Container>
       </Center>

@@ -6,10 +6,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.icu.util.Calendar;
 import android.os.Build;
-
-import androidx.core.app.NotificationCompat;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -64,22 +63,6 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     }
   }
 
-  private Class getMainActivity(){
-    String packageName = reactContext.getPackageName();
-    Intent intent = reactContext.getPackageManager().getLaunchIntentForPackage(packageName);
-    String className = intent.getComponent().getClassName();
-
-    System.out.println(packageName);
-    System.out.println(className);
-
-    try {
-      return Class.forName(className);
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
   @ReactMethod
   public void schedule(final ReadableMap rm, Callback success, Callback fail){
     Runnable r = new Runnable() {
@@ -112,28 +95,6 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
           if(hour<currHour || (hour==currHour && minute<currMinute) || (hour==currHour && minute==currMinute && second<currSecond))
             calendar.setTimeInMillis(calendar.getTimeInMillis() + (1000*60*60*24));
-
-
-          Intent notiIntent = new Intent(reactContext, getMainActivity());
-          notiIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-          notiIntent.putExtra("id", alarm.getAlarmId());
-          notiIntent.putExtra("name", alarm.getAlarmName());
-          notiIntent.putExtra("hour", hour);
-          notiIntent.putExtra("minute", minute);
-          notiIntent.putExtra("isActivate", true);
-
-          PendingIntent notiPendingIntent = PendingIntent.getActivity(reactContext, 0, notiIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-          NotificationCompat.Builder builder = new NotificationCompat.Builder(reactContext, channelId)
-//                    .setSmallIcon(R.mipmap.ic_launcher)
-                  .setContentTitle("일어나")
-                  .setContentText("일어날 시간입니다.")
-                  .setContentIntent(notiPendingIntent)
-                  .setOngoing(true)
-                  .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-
-          notificationManager.notify(1, builder.build());
 
           Intent alarmIntent = new Intent(reactContext, AlarmReceiver.class);
           alarmIntent.putExtra("id", alarm.getAlarmId());

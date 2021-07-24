@@ -12,6 +12,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        System.out.println("receive: 1");
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent alarmServiceIntent = new Intent(context, AlarmService.class);
@@ -19,13 +20,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmServiceIntent.putExtra("name", intent.getStringExtra("name"));
         alarmServiceIntent.putExtra("sound", intent.getStringExtra("sound"));
         alarmServiceIntent.putExtra("vibration", intent.getBooleanExtra("vibration", true));
-        alarmServiceIntent.putExtra("photo", intent.getBooleanExtra("photo", false));
-        alarmServiceIntent.putExtra("rps", intent.getBooleanExtra("rps", false));
-        alarmServiceIntent.putExtra("math", intent.getIntExtra("math", 0));
-        alarmServiceIntent.putExtra("card", intent.getIntExtra("card", 0));
         alarmServiceIntent.putExtra("hour", intent.getIntExtra("hour", 0));
         alarmServiceIntent.putExtra("minute", intent.getIntExtra("minute", 0));
-
+        System.out.println("receive: 2");
         context.startForegroundService(alarmServiceIntent);
         scheduleNextAlarm(context, intent);
     }

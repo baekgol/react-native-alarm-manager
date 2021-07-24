@@ -27,22 +27,16 @@ const App = () => {
   const hours = [];
   const minutes = [];
   const [date, setDate] = useState(new Date());
-  const [sound, setSound] = useState('0');
+  const [createName, setCreateName] = useState('');
+  const [modifyName, setModifyName] = useState('');
+  const [createSound, setCreateSound] = useState('0');
   const [modifySound, setModifySound] = useState('0');
-  const [isCreateVibration, setIsCreateVibration] = useState(true);
-  const [isModifyVibration, setIsModifyVibration] = useState(true);
+  const [createIsVibration, setCreateIsVibration] = useState(true);
+  const [modifyIsVibration, setModifyIsVibration] = useState(true);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [isListModal, setIsListModal] = useState(false);
   const [isModifyModal, setIsModifyModal] = useState(false);
   const [alarmList, setAlarmList] = useState([]);
-
-  const alarmInfo = {
-    alarm_time: '19:59:00',
-    alarm_name: '',
-    alarm_sound: 'adventure',
-    alarm_vibration: true,
-    alarm_activate: true,
-  };
 
   const soundList = [
     {name: 'Adventure', src: 'adventure'},
@@ -73,14 +67,14 @@ const App = () => {
   };
 
   const selectCreateSound = value => {
-    soundPlayerList[sound].stop();
-    setSound(value);
+    soundPlayerList[createSound].stop();
+    setCreateSound(value);
     soundPlayerList[value].setVolume(1.0).play();
   };
 
   const toggleCreateVibration = () => {
-    setIsCreateVibration(!isCreateVibration);
-    if (!isCreateVibration) Vibration.vibrate();
+    setCreateIsVibration(!createIsVibration);
+    if (!createIsVibration) Vibration.vibrate();
   };
 
   const selectModifySound = value => {
@@ -90,8 +84,8 @@ const App = () => {
   };
 
   const toggleModifyVibration = () => {
-    setIsModifyVibration(!isModifyVibration);
-    if (!isModifyVibration) Vibration.vibrate();
+    setModifyIsVibration(!modifyIsVibration);
+    if (!modifyIsVibration) Vibration.vibrate();
   };
 
   const closeModifyModal = () => {
@@ -218,7 +212,7 @@ const App = () => {
                   <Switch
                     size="lg"
                     colorScheme="emerald"
-                    isChecked={isCreateVibration}
+                    isChecked={createIsVibration}
                     onToggle={() => toggleModifyVibration()}
                     style={{marginLeft: 50}}
                   />
@@ -243,7 +237,7 @@ const App = () => {
   const showList = () => {
     Alarm.searchAll(
       success => {
-        soundPlayerList[sound].stop();
+        soundPlayerList[createSound].stop();
         setAlarmList(success);
         setIsListModal(true);
       },
@@ -253,15 +247,25 @@ const App = () => {
     );
   };
 
-  // Alarm.schedule(
-  //   alarmInfo,
-  //   success => {
+  const createAlarm = () => {
+    const alarmInfo = {
+      alarm_time: dateToTime(date),
+      alarm_name: createName,
+      alarm_sound: soundList[createSound].src,
+      alarm_vibration: createIsVibration,
+      alarm_activate: true,
+    };
 
-  //   },
-  //   fail => {
-  //     alert(fail);
-  //   },
-  // );
+    Alarm.schedule(
+      alarmInfo,
+      success => {
+        console.log(success);
+      },
+      fail => {
+        alert(fail);
+      },
+    );
+  };
 
   return (
     <NativeBaseProvider>
@@ -301,7 +305,7 @@ const App = () => {
             />
             <Heading size="md">Sound</Heading>
             <Select
-              selectedValue={sound}
+              selectedValue={createSound}
               onValueChange={value => selectCreateSound(value)}>
               <Select.Item label="Adventure" value="0" />
               <Select.Item label="Bliss" value="1" />
@@ -314,12 +318,12 @@ const App = () => {
               <Switch
                 size="lg"
                 colorScheme="emerald"
-                isChecked={isCreateVibration}
+                isChecked={createIsVibration}
                 onToggle={() => toggleCreateVibration()}
                 style={{marginLeft: 50}}
               />
             </HStack>
-            <Button>Create Alarm</Button>
+            <Button onPress={() => createAlarm()}>Create Alarm</Button>
           </VStack>
         </Container>
       </Center>

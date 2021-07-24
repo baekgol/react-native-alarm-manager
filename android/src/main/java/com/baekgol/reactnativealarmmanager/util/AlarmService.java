@@ -54,6 +54,7 @@ public class AlarmService extends Service {
         Class mainActivity = getMainActivity();
 
         if(mainActivity!=null){
+            System.out.println("service: 1");
             Intent notiIntent = new Intent(this, mainActivity);
             notiIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
@@ -80,12 +81,12 @@ public class AlarmService extends Service {
                 vibrator.vibrate(VibrationEffect.createWaveform(new long[]{1000, 500}, new int[]{0, 50}, 0));
             }
 
-//            int resId = this.getResources().getIdentifier(intent.getStringExtra("sound"), "raw", "com.baekgol.reactnativealarmmanager");
-//            mediaPlayer = MediaPlayer.create(this, resId);
-//            mediaPlayer.setLooping(true);
-//            mediaPlayer.start();
+            int resId = this.getResources().getIdentifier(intent.getStringExtra("sound"), "raw", "com.baekgol.reactnativealarmmanager");
+            mediaPlayer = MediaPlayer.create(this, resId);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
         }
-
+        System.out.println("service: 2");
         return START_STICKY;
     }
 

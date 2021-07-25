@@ -15,19 +15,28 @@ public class AlarmDto {
     private int alarmId;
 
     @NonNull
-    @ColumnInfo(name="alarm_time")
-    private Time alarmTime;
+    @ColumnInfo(name="alarm_title")
+    private String alarmTitle;
 
     @NonNull
-    @ColumnInfo(name="alarm_name")
-    private String alarmName;
+    @ColumnInfo(name="alarm_text")
+    private String alarmText;
 
+    @NonNull
     @ColumnInfo(name="alarm_sound")
     private String alarmSound;
 
     @NonNull
     @ColumnInfo(name="alarm_vibration")
     private boolean alarmVibration;
+
+    @NonNull
+    @ColumnInfo(name="alarm_icon")
+    private String alarmIcon;
+
+    @NonNull
+    @ColumnInfo(name="alarm_time")
+    private Time alarmTime;
 
     @NonNull
     @ColumnInfo(name="alarm_activate", defaultValue = "true")
@@ -41,20 +50,20 @@ public class AlarmDto {
         this.alarmId = alarmId;
     }
 
-    public Time getAlarmTime() {
-        return alarmTime;
+    public String getAlarmTitle() {
+        return alarmTitle;
     }
 
-    public void setAlarmTime(@NonNull Time alarmTime) {
-        this.alarmTime = alarmTime;
+    public void setAlarmTitle(String alarmTitle) {
+        this.alarmTitle = alarmTitle;
     }
 
-    public String getAlarmName() {
-        return alarmName;
+    public String getAlarmText() {
+        return alarmText;
     }
 
-    public void setAlarmName(@NonNull String alarmName) {
-        this.alarmName = alarmName;
+    public void setAlarmText(String alarmText) {
+        this.alarmText = alarmText;
     }
 
     public String getAlarmSound() {
@@ -69,6 +78,22 @@ public class AlarmDto {
 
     public void setAlarmVibration(boolean alarmVibration) { this.alarmVibration = alarmVibration; }
 
+    public String getAlarmIcon() {
+        return alarmIcon;
+    }
+
+    public void setAlarmIcon(String alarmIcon) {
+        this.alarmIcon = alarmIcon;
+    }
+
+    public Time getAlarmTime() {
+        return alarmTime;
+    }
+
+    public void setAlarmTime(@NonNull Time alarmTime) {
+        this.alarmTime = alarmTime;
+    }
+
     public boolean isAlarmActivate() {
         return alarmActivate;
     }
@@ -82,9 +107,11 @@ public class AlarmDto {
         return "AlarmDto{" +
                 "alarmId=" + alarmId +
                 ", alarmTime=" + alarmTime +
-                ", alarmName='" + alarmName +
                 ", alarmSound='" + alarmSound +
                 ", alarmVibration='" + alarmVibration +
+                ", alarmIcon='" + alarmIcon +
+                ", alarmTitle='" + alarmTitle +
+                ", alarmText='" + alarmText +
                 ", alarmActivate=" + alarmActivate +
                 '}';
     }

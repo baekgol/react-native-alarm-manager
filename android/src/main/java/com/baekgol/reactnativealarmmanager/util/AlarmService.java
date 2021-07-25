@@ -33,12 +33,11 @@ public class AlarmService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        packageName = getPackageName();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        packageName = getPackageName();
-
         if(mediaPlayer!=null) {
             vibrator.cancel();
             mediaPlayer.stop();
@@ -48,21 +47,16 @@ public class AlarmService extends Service {
         notiIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         notiIntent.putExtra("id", intent.getIntExtra("id", 0));
-        notiIntent.putExtra("name", intent.getStringExtra("name"));
         notiIntent.putExtra("hour", intent.getIntExtra("hour", 0));
         notiIntent.putExtra("minute", intent.getIntExtra("minute", 0));
         notiIntent.putExtra("isActivate", true);
 
         PendingIntent notiPendingIntent = PendingIntent.getActivity(this, 0, notiIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        //          Resources res = reactContext.getResources();
-//          String packageName = reactContext.getPackageName();
-//          int smallIconResId = res.getIdentifier("ic_launcher", "mipmap", packageName);
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
-//                    .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("일어나")
-                .setContentText("일어날 시간입니다.")
+                .setSmallIcon(getResources().getIdentifier(intent.getStringExtra("icon"), "drawable", packageName))
+                .setContentTitle(intent.getStringExtra("title"))
+                .setContentText(intent.getStringExtra("text"))
                 .setContentIntent(notiPendingIntent)
                 .setOngoing(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);

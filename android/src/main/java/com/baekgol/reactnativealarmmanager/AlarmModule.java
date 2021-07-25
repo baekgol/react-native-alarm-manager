@@ -98,9 +98,11 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
           Intent alarmIntent = new Intent(reactContext, AlarmReceiver.class);
           alarmIntent.putExtra("id", alarm.getAlarmId());
-          alarmIntent.putExtra("name", alarm.getAlarmName());
+          alarmIntent.putExtra("title", alarm.getAlarmTitle());
+          alarmIntent.putExtra("text", alarm.getAlarmText());
           alarmIntent.putExtra("sound", alarm.getAlarmSound());
           alarmIntent.putExtra("vibration", alarm.isAlarmVibration());
+          alarmIntent.putExtra("icon", alarm.getAlarmIcon());
           alarmIntent.putExtra("hour", hour);
           alarmIntent.putExtra("minute", minute);
 
@@ -219,8 +221,11 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
             Intent alarmIntent = new Intent(reactContext, AlarmReceiver.class);
             alarmIntent.putExtra("id", newAlarm.getAlarmId());
-            alarmIntent.putExtra("name", newAlarm.getAlarmName());
+            alarmIntent.putExtra("title", newAlarm.getAlarmTitle());
+            alarmIntent.putExtra("text", newAlarm.getAlarmText());
             alarmIntent.putExtra("sound", newAlarm.getAlarmSound());
+            alarmIntent.putExtra("vibration", newAlarm.isAlarmVibration());
+            alarmIntent.putExtra("icon", newAlarm.getAlarmIcon());
             alarmIntent.putExtra("hour", hour);
             alarmIntent.putExtra("minute", minute);
 
@@ -309,10 +314,12 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     WritableMap wm = new WritableNativeMap();
 
     wm.putInt("alarm_id", dto.getAlarmId());
-    wm.putString("alarm_time", format.format(dto.getAlarmTime().getTime()));
-    wm.putString("alarm_name", dto.getAlarmName());
+    wm.putString("alarm_title", dto.getAlarmTitle());
+    wm.putString("alarm_text", dto.getAlarmText());
     wm.putString("alarm_sound", dto.getAlarmSound());
     wm.putBoolean("alarm_vibration", dto.isAlarmVibration());
+    wm.putString("alarm_icon", dto.getAlarmIcon());
+    wm.putString("alarm_time", format.format(dto.getAlarmTime().getTime()));
     wm.putBoolean("alarm_activate", dto.isAlarmActivate());
 
     return wm;
@@ -331,10 +338,12 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     AlarmDto newAlarm = new AlarmDto();
 
     if(isModify) newAlarm.setAlarmId(rm.getInt("alarm_id"));
-    newAlarm.setAlarmName(rm.getString("alarm_name"));
+    newAlarm.setAlarmTitle(rm.getString("alarm_title"));
+    newAlarm.setAlarmText(rm.getString("alarm_text"));
     newAlarm.setAlarmSound(rm.getString("alarm_sound"));
-    newAlarm.setAlarmTime(Time.valueOf(rm.getString("alarm_time")));
     newAlarm.setAlarmVibration(rm.getBoolean("alarm_vibration"));
+    newAlarm.setAlarmIcon(rm.getString("alarm_icon"));
+    newAlarm.setAlarmTime(Time.valueOf(rm.getString("alarm_time")));
     newAlarm.setAlarmActivate(rm.getBoolean("alarm_activate"));
 
     return newAlarm;

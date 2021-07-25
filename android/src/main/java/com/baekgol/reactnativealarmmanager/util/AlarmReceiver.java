@@ -16,9 +16,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Intent alarmServiceIntent = new Intent(context, AlarmService.class);
         alarmServiceIntent.putExtra("id", intent.getIntExtra("id", 0));
-        alarmServiceIntent.putExtra("name", intent.getStringExtra("name"));
+        alarmServiceIntent.putExtra("title", intent.getStringExtra("title"));
+        alarmServiceIntent.putExtra("text", intent.getStringExtra("text"));
         alarmServiceIntent.putExtra("sound", intent.getStringExtra("sound"));
         alarmServiceIntent.putExtra("vibration", intent.getBooleanExtra("vibration", true));
+        alarmServiceIntent.putExtra("icon", intent.getStringExtra("icon"));
         alarmServiceIntent.putExtra("hour", intent.getIntExtra("hour", 0));
         alarmServiceIntent.putExtra("minute", intent.getIntExtra("minute", 0));
 

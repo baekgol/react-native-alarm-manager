@@ -3,6 +3,7 @@ import {Vibration} from 'react-native';
 import {
   NativeBaseProvider,
   Container,
+  ScrollView,
   Center,
   HStack,
   VStack,
@@ -27,12 +28,16 @@ const App = () => {
   const hours = [];
   const minutes = [];
   const [date, setDate] = useState(new Date());
-  const [createName, setCreateName] = useState('');
-  const [modifyName, setModifyName] = useState('');
+  const [createTitle, setCreateTitle] = useState('');
+  const [modifyTitle, setModifyTitle] = useState('');
+  const [createText, setCreateText] = useState('');
+  const [modifyText, setModifyText] = useState('');
   const [createSound, setCreateSound] = useState('0');
   const [modifySound, setModifySound] = useState('0');
   const [createIsVibration, setCreateIsVibration] = useState(true);
   const [modifyIsVibration, setModifyIsVibration] = useState(true);
+  const [createIcon, setCreateIcon] = useState('0');
+  const [modifyIcon, setModifyIcon] = useState('0');
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [isListModal, setIsListModal] = useState(false);
   const [isModifyModal, setIsModifyModal] = useState(false);
@@ -194,7 +199,7 @@ const App = () => {
                 <Input
                   variant="outline"
                   placeholder="Alarm Name"
-                  onChangeText={value => setModifyName(value)}
+                  onChangeText={value => setModifyTitle(value)}
                   style={{marginBottom: 20}}
                 />
                 <Heading size="md">Sound</Heading>
@@ -249,10 +254,12 @@ const App = () => {
 
   const createAlarm = () => {
     const alarmInfo = {
-      alarm_time: dateToTime(date),
-      alarm_name: createName,
+      alarm_title: createTitle,
+      alarm_text: createText,
       alarm_sound: soundList[createSound].src,
       alarm_vibration: createIsVibration,
+      alarm_icon: createIcon,
+      alarm_time: dateToTime(date),
       alarm_activate: true,
     };
 
@@ -269,16 +276,16 @@ const App = () => {
 
   return (
     <NativeBaseProvider>
-      <Center style={{paddingTop: 20}}>
-        {getListModal()}
-        {getModifyModal()}
-        <Button
-          variant="ghost"
-          onPress={() => showList()}
-          style={{alignSelf: 'flex-end', marginRight: 20}}>
-          Alarm List
-        </Button>
-        <Container>
+      <Button
+        variant="ghost"
+        onPress={() => showList()}
+        style={{alignSelf: 'flex-end', marginRight: 20}}>
+        Alarm List
+      </Button>
+      <ScrollView>
+        <Center>
+          {getListModal()}
+          {getModifyModal()}
           <VStack space={5}>
             <Heading size="md">Time</Heading>
             <TimePicker
@@ -296,12 +303,19 @@ const App = () => {
               itemTextColor={'#bbbbbb'}
               hideIndicator
             />
-            <Heading size="md">Name</Heading>
+            <Heading size="md">Title</Heading>
             <Input
               variant="outline"
-              placeholder="Alarm Name"
-              onChangeText={value => setCreateName(value)}
-              style={{marginBottom: 20}}
+              placeholder="Alarm Title"
+              onChangeText={value => setCreateTitle(value)}
+              style={{marginBottom: 10}}
+            />
+            <Heading size="md">Text</Heading>
+            <Input
+              variant="outline"
+              placeholder="Alarm Text"
+              onChangeText={value => setCreateText(value)}
+              style={{marginBottom: 10}}
             />
             <Heading size="md">Sound</Heading>
             <Select
@@ -313,7 +327,7 @@ const App = () => {
             </Select>
             <HStack
               justifyContent="space-between"
-              style={{marginTop: 20, marginBottom: 20}}>
+              style={{marginTop: 10, marginBottom: 10}}>
               <Heading size="md">Vibration</Heading>
               <Switch
                 size="lg"
@@ -323,10 +337,22 @@ const App = () => {
                 style={{marginLeft: 50}}
               />
             </HStack>
-            <Button onPress={() => createAlarm()}>Create Alarm</Button>
+            <Heading size="md">Icon</Heading>
+            <Select
+              selectedValue={createIcon}
+              onValueChange={value => setCreateIcon(value)}>
+              <Select.Item label="basic1" value="0" />
+              <Select.Item label="basic2" value="1" />
+              <Select.Item label="baisc3" value="2" />
+            </Select>
+            <Button
+              onPress={() => createAlarm()}
+              style={{marginTop: 10, marginBottom: 30}}>
+              Create Alarm
+            </Button>
           </VStack>
-        </Container>
-      </Center>
+        </Center>
+      </ScrollView>
     </NativeBaseProvider>
   );
 };

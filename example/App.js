@@ -34,10 +34,14 @@ const App = () => {
   const [modifyText, setModifyText] = useState('');
   const [createSound, setCreateSound] = useState('0');
   const [modifySound, setModifySound] = useState('0');
+  const [createIsSoundLoop, setCreateIsSoundLoop] = useState(false);
+  const [modifyIsSoundLoop, setModifyIsSoundLoop] = useState(false);
   const [createIsVibration, setCreateIsVibration] = useState(true);
   const [modifyIsVibration, setModifyIsVibration] = useState(true);
   const [createIcon, setCreateIcon] = useState('0');
   const [modifyIcon, setModifyIcon] = useState('0');
+  const [createIsNotiRemovable, setCreateIsNotiRemovable] = useState(false);
+  const [modifyIsNotiRemovable, setModifyIsNotiRemovable] = useState(false);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [isListModal, setIsListModal] = useState(false);
   const [isModifyModal, setIsModifyModal] = useState(false);
@@ -179,53 +183,99 @@ const App = () => {
           <Modal.CloseButton />
           <Modal.Header>Alarm Modification</Modal.Header>
           <Modal.Body>
-            <Center style={{paddingTop: 20}}>
-              <VStack space={5}>
-                <Heading size="md">Time</Heading>
-                <TimePicker
-                  initDate={date}
-                  hours={hours}
-                  minutes={minutes}
-                  onTimeSelected={currDate => {
-                    setDate(currDate);
-                    dateToTime(currDate);
-                  }}
-                  style={{height: 200, width: 100}}
-                  itemTextSize={25}
-                  selectedItemTextSize={30}
-                  selectedItemTextColor={'#333333'}
-                  itemTextColor={'#bbbbbb'}
-                  hideIndicator
-                />
-                <Heading size="md">Name</Heading>
-                <Input
-                  variant="outline"
-                  placeholder="Alarm Name"
-                  onChangeText={value => setModifyTitle(value)}
-                  style={{marginBottom: 20}}
-                />
-                <Heading size="md">Sound</Heading>
-                <Select
-                  selectedValue={modifySound}
-                  onValueChange={value => selectModifySound(value)}>
-                  <Select.Item label="Adventure" value="0" />
-                  <Select.Item label="Bliss" value="1" />
-                  <Select.Item label="The Inspiration" value="2" />
-                </Select>
-                <HStack
-                  justifyContent="space-between"
-                  style={{marginTop: 20, marginBottom: 20}}>
-                  <Heading size="md">Vibration</Heading>
-                  <Switch
-                    size="lg"
-                    colorScheme="emerald"
-                    isChecked={createIsVibration}
-                    onToggle={() => toggleModifyVibration()}
-                    style={{marginLeft: 50}}
+            <ScrollView>
+              <Center>
+                <VStack space={5}>
+                  <Heading size="md">Time</Heading>
+                  <TimePicker
+                    initDate={date}
+                    hours={hours}
+                    minutes={minutes}
+                    onTimeSelected={currDate => {
+                      setDate(currDate);
+                      dateToTime(currDate);
+                    }}
+                    style={{height: 200, width: 100}}
+                    itemTextSize={25}
+                    selectedItemTextSize={30}
+                    selectedItemTextColor={'#333333'}
+                    itemTextColor={'#bbbbbb'}
+                    hideIndicator
                   />
-                </HStack>
-              </VStack>
-            </Center>
+                  <Heading size="md">Title</Heading>
+                  <Input
+                    variant="outline"
+                    placeholder="Alarm Title"
+                    onChangeText={value => setCreateTitle(value)}
+                    style={{marginBottom: 10}}
+                  />
+                  <Heading size="md">Text</Heading>
+                  <Input
+                    variant="outline"
+                    placeholder="Alarm Text"
+                    onChangeText={value => setCreateText(value)}
+                    style={{marginBottom: 10}}
+                  />
+                  <Heading size="md">Sound</Heading>
+                  <Select
+                    selectedValue={createSound}
+                    onValueChange={value => selectCreateSound(value)}>
+                    <Select.Item label="Adventure" value="0" />
+                    <Select.Item label="Bliss" value="1" />
+                    <Select.Item label="The Inspiration" value="2" />
+                  </Select>
+                  <Heading size="md" style={{marginTop: 10}}>
+                    Icon
+                  </Heading>
+                  <Select
+                    selectedValue={createIcon}
+                    onValueChange={value => setCreateIcon(value)}>
+                    <Select.Item label="Mail" value="0" />
+                    <Select.Item label="User" value="1" />
+                    <Select.Item label="Like" value="2" />
+                  </Select>
+                  <HStack
+                    justifyContent="space-between"
+                    style={{marginTop: 10}}>
+                    <Heading size="md">Sound Loop</Heading>
+                    <Switch
+                      size="lg"
+                      colorScheme="emerald"
+                      isChecked={createIsSoundLoop}
+                      onToggle={() => setCreateIsSoundLoop(!createIsSoundLoop)}
+                      style={{marginLeft: 50}}
+                    />
+                  </HStack>
+                  <HStack justifyContent="space-between">
+                    <Heading size="md">Vibration</Heading>
+                    <Switch
+                      size="lg"
+                      colorScheme="emerald"
+                      isChecked={createIsVibration}
+                      onToggle={() => toggleCreateVibration()}
+                      style={{marginLeft: 50}}
+                    />
+                  </HStack>
+                  <HStack justifyContent="space-between">
+                    <Heading size="md">Notification Removable</Heading>
+                    <Switch
+                      size="lg"
+                      colorScheme="emerald"
+                      isChecked={createIsNotiRemovable}
+                      onToggle={() =>
+                        setCreateIsNotiRemovable(!createIsNotiRemovable)
+                      }
+                      style={{marginLeft: 50}}
+                    />
+                  </HStack>
+                  <Button
+                    onPress={() => createAlarm()}
+                    style={{marginTop: 10, marginBottom: 30}}>
+                    Create Alarm
+                  </Button>
+                </VStack>
+              </Center>
+            </ScrollView>
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -259,10 +309,12 @@ const App = () => {
       alarm_title: createTitle,
       alarm_text: createText,
       alarm_sound: soundList[createSound].src,
+      alarm_isSoundLoop: createIsSoundLoop,
       alarm_vibration: createIsVibration,
       alarm_icon: iconList[createIcon],
       alarm_time: dateToTime(date),
       alarm_activate: true,
+      alarm_isNotiRemovable: createIsNotiRemovable,
     };
 
     Alarm.schedule(
@@ -327,9 +379,27 @@ const App = () => {
               <Select.Item label="Bliss" value="1" />
               <Select.Item label="The Inspiration" value="2" />
             </Select>
-            <HStack
-              justifyContent="space-between"
-              style={{marginTop: 10, marginBottom: 10}}>
+            <Heading size="md" style={{marginTop: 10}}>
+              Icon
+            </Heading>
+            <Select
+              selectedValue={createIcon}
+              onValueChange={value => setCreateIcon(value)}>
+              <Select.Item label="Mail" value="0" />
+              <Select.Item label="User" value="1" />
+              <Select.Item label="Like" value="2" />
+            </Select>
+            <HStack justifyContent="space-between" style={{marginTop: 10}}>
+              <Heading size="md">Sound Loop</Heading>
+              <Switch
+                size="lg"
+                colorScheme="emerald"
+                isChecked={createIsSoundLoop}
+                onToggle={() => setCreateIsSoundLoop(!createIsSoundLoop)}
+                style={{marginLeft: 50}}
+              />
+            </HStack>
+            <HStack justifyContent="space-between">
               <Heading size="md">Vibration</Heading>
               <Switch
                 size="lg"
@@ -339,14 +409,18 @@ const App = () => {
                 style={{marginLeft: 50}}
               />
             </HStack>
-            <Heading size="md">Icon</Heading>
-            <Select
-              selectedValue={createIcon}
-              onValueChange={value => setCreateIcon(value)}>
-              <Select.Item label="Mail" value="0" />
-              <Select.Item label="User" value="1" />
-              <Select.Item label="Like" value="2" />
-            </Select>
+            <HStack justifyContent="space-between">
+              <Heading size="md">Notification Removable</Heading>
+              <Switch
+                size="lg"
+                colorScheme="emerald"
+                isChecked={createIsNotiRemovable}
+                onToggle={() =>
+                  setCreateIsNotiRemovable(!createIsNotiRemovable)
+                }
+                style={{marginLeft: 50}}
+              />
+            </HStack>
             <Button
               onPress={() => createAlarm()}
               style={{marginTop: 10, marginBottom: 30}}>

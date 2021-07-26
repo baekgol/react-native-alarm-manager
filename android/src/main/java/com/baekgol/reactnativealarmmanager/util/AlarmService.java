@@ -58,7 +58,7 @@ public class AlarmService extends Service {
                 .setContentTitle(intent.getStringExtra("title"))
                 .setContentText(intent.getStringExtra("text"))
                 .setContentIntent(notiPendingIntent)
-                .setOngoing(true)
+                .setOngoing(intent.getBooleanExtra("isNotiRemovable", false))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         this.startForeground(1, builder.build());
@@ -70,7 +70,7 @@ public class AlarmService extends Service {
 
         int resId = this.getResources().getIdentifier(intent.getStringExtra("sound"), "raw", packageName);
         mediaPlayer = MediaPlayer.create(this, resId);
-        mediaPlayer.setLooping(true);
+        mediaPlayer.setLooping(intent.getBooleanExtra("isSoundLoop", false));
         mediaPlayer.start();
 
         return START_STICKY;

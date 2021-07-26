@@ -49,6 +49,8 @@ const App = () => {
     {name: 'The Inspiration', src: 'the_inspiration'},
   ];
 
+  const iconList = ['mail', 'user', 'like'];
+
   for (let i = 1; i <= 12; i++) hours.push(i + '');
 
   for (let i = 0; i < 60; i++) {
@@ -258,7 +260,7 @@ const App = () => {
       alarm_text: createText,
       alarm_sound: soundList[createSound].src,
       alarm_vibration: createIsVibration,
-      alarm_icon: createIcon,
+      alarm_icon: iconList[createIcon],
       alarm_time: dateToTime(date),
       alarm_activate: true,
     };
@@ -341,9 +343,9 @@ const App = () => {
             <Select
               selectedValue={createIcon}
               onValueChange={value => setCreateIcon(value)}>
-              <Select.Item label="basic1" value="0" />
-              <Select.Item label="basic2" value="1" />
-              <Select.Item label="baisc3" value="2" />
+              <Select.Item label="Mail" value="0" />
+              <Select.Item label="User" value="1" />
+              <Select.Item label="Like" value="2" />
             </Select>
             <Button
               onPress={() => createAlarm()}

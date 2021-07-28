@@ -26,9 +26,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmServiceIntent.putExtra("vibration", intent.getBooleanExtra("vibration", true));
         alarmServiceIntent.putExtra("notiRemovable", !intent.getBooleanExtra("notiRemovable", true));
 
-        System.out.println("notiRemovable receiver");
-        System.out.println(!intent.getBooleanExtra("notiRemovable", true));
-
         context.startForegroundService(alarmServiceIntent);
         scheduleNextAlarm(context, intent);
     }

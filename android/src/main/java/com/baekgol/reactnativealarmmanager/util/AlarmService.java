@@ -45,12 +45,9 @@ public class AlarmService extends Service {
                 .setContentTitle(intent.getStringExtra("title"))
                 .setContentText(intent.getStringExtra("text"))
                 .setSmallIcon(getResources().getIdentifier(intent.getStringExtra("icon"), "drawable", packageName))
-                .setOngoing(intent.getBooleanExtra("notiRemovable", false))
                 .setContentIntent(notiPendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-        System.out.println("notiRemovable service");
-        System.out.println(!intent.getBooleanExtra("notiRemovable", true));
 
         this.startForeground(1, builder.build());
 

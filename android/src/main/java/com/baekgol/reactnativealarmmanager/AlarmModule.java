@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.icu.util.Calendar;
 import android.os.Build;
 
@@ -98,13 +97,15 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
           Intent alarmIntent = new Intent(reactContext, AlarmReceiver.class);
           alarmIntent.putExtra("id", alarm.getAlarmId());
+          alarmIntent.putExtra("hour", hour);
+          alarmIntent.putExtra("minute", minute);
           alarmIntent.putExtra("title", alarm.getAlarmTitle());
           alarmIntent.putExtra("text", alarm.getAlarmText());
           alarmIntent.putExtra("sound", alarm.getAlarmSound());
-          alarmIntent.putExtra("vibration", alarm.isAlarmVibration());
           alarmIntent.putExtra("icon", alarm.getAlarmIcon());
-          alarmIntent.putExtra("hour", hour);
-          alarmIntent.putExtra("minute", minute);
+          alarmIntent.putExtra("soundLoop", alarm.isAlarmSoundLoop());
+          alarmIntent.putExtra("vibration", alarm.isAlarmVibration());
+          alarmIntent.putExtra("notiRemovable", alarm.isAlarmNotiRemovable());
 
           PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(reactContext, alarm.getAlarmId(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
           alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);
@@ -221,13 +222,15 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
             Intent alarmIntent = new Intent(reactContext, AlarmReceiver.class);
             alarmIntent.putExtra("id", newAlarm.getAlarmId());
+            alarmIntent.putExtra("hour", hour);
+            alarmIntent.putExtra("minute", minute);
             alarmIntent.putExtra("title", newAlarm.getAlarmTitle());
             alarmIntent.putExtra("text", newAlarm.getAlarmText());
             alarmIntent.putExtra("sound", newAlarm.getAlarmSound());
-            alarmIntent.putExtra("vibration", newAlarm.isAlarmVibration());
             alarmIntent.putExtra("icon", newAlarm.getAlarmIcon());
-            alarmIntent.putExtra("hour", hour);
-            alarmIntent.putExtra("minute", minute);
+            alarmIntent.putExtra("soundLoop", newAlarm.isAlarmSoundLoop());
+            alarmIntent.putExtra("vibration", newAlarm.isAlarmVibration());
+            alarmIntent.putExtra("notiRemovable", newAlarm.isAlarmNotiRemovable());
 
             alarmPendingIntent = PendingIntent.getBroadcast(reactContext, newAlarm.getAlarmId(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);
@@ -314,12 +317,14 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     WritableMap wm = new WritableNativeMap();
 
     wm.putInt("alarm_id", dto.getAlarmId());
+    wm.putString("alarm_time", format.format(dto.getAlarmTime().getTime()));
     wm.putString("alarm_title", dto.getAlarmTitle());
     wm.putString("alarm_text", dto.getAlarmText());
     wm.putString("alarm_sound", dto.getAlarmSound());
-    wm.putBoolean("alarm_vibration", dto.isAlarmVibration());
     wm.putString("alarm_icon", dto.getAlarmIcon());
-    wm.putString("alarm_time", format.format(dto.getAlarmTime().getTime()));
+    wm.putBoolean("alarm_sound_loop", dto.isAlarmSoundLoop());
+    wm.putBoolean("alarm_vibration", dto.isAlarmVibration());
+    wm.putBoolean("alarm_noti_removable", dto.isAlarmNotiRemovable());
     wm.putBoolean("alarm_activate", dto.isAlarmActivate());
 
     return wm;
@@ -338,12 +343,14 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     AlarmDto newAlarm = new AlarmDto();
 
     if(isModify) newAlarm.setAlarmId(rm.getInt("alarm_id"));
+    newAlarm.setAlarmTime(Time.valueOf(rm.getString("alarm_time")));
     newAlarm.setAlarmTitle(rm.getString("alarm_title"));
     newAlarm.setAlarmText(rm.getString("alarm_text"));
     newAlarm.setAlarmSound(rm.getString("alarm_sound"));
-    newAlarm.setAlarmVibration(rm.getBoolean("alarm_vibration"));
     newAlarm.setAlarmIcon(rm.getString("alarm_icon"));
-    newAlarm.setAlarmTime(Time.valueOf(rm.getString("alarm_time")));
+    newAlarm.setAlarmSoundLoop(rm.getBoolean("alarm_sound_loop"));
+    newAlarm.setAlarmVibration(rm.getBoolean("alarm_vibration"));
+    newAlarm.setAlarmNotiRemovable(rm.getBoolean("alarm_noti_removable"));
     newAlarm.setAlarmActivate(rm.getBoolean("alarm_activate"));
 
     return newAlarm;

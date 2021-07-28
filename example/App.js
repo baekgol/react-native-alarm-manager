@@ -34,14 +34,14 @@ const App = () => {
   const [modifyText, setModifyText] = useState('');
   const [createSound, setCreateSound] = useState('0');
   const [modifySound, setModifySound] = useState('0');
-  const [createIsSoundLoop, setCreateIsSoundLoop] = useState(false);
-  const [modifyIsSoundLoop, setModifyIsSoundLoop] = useState(false);
-  const [createIsVibration, setCreateIsVibration] = useState(true);
-  const [modifyIsVibration, setModifyIsVibration] = useState(true);
   const [createIcon, setCreateIcon] = useState('0');
   const [modifyIcon, setModifyIcon] = useState('0');
-  const [createIsNotiRemovable, setCreateIsNotiRemovable] = useState(false);
-  const [modifyIsNotiRemovable, setModifyIsNotiRemovable] = useState(false);
+  const [createSoundLoop, setCreateSoundLoop] = useState(true);
+  const [modifySoundLoop, setModifySoundLoop] = useState(true);
+  const [createVibration, setCreateVibration] = useState(true);
+  const [modifyVibration, setModifyVibration] = useState(true);
+  const [createNotiRemovable, setCreateNotiRemovable] = useState(true);
+  const [modifyNotiRemovable, setModifyNotiRemovable] = useState(true);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [isListModal, setIsListModal] = useState(false);
   const [isModifyModal, setIsModifyModal] = useState(false);
@@ -84,8 +84,8 @@ const App = () => {
   };
 
   const toggleCreateVibration = () => {
-    setCreateIsVibration(!createIsVibration);
-    if (!createIsVibration) Vibration.vibrate();
+    setCreateVibration(!createVibration);
+    if (!createVibration) Vibration.vibrate();
   };
 
   const selectModifySound = value => {
@@ -95,8 +95,8 @@ const App = () => {
   };
 
   const toggleModifyVibration = () => {
-    setModifyIsVibration(!modifyIsVibration);
-    if (!modifyIsVibration) Vibration.vibrate();
+    setModifyVibration(!modifyVibration);
+    if (!modifyVibration) Vibration.vibrate();
   };
 
   const closeModifyModal = () => {
@@ -241,8 +241,8 @@ const App = () => {
                     <Switch
                       size="lg"
                       colorScheme="emerald"
-                      isChecked={createIsSoundLoop}
-                      onToggle={() => setCreateIsSoundLoop(!createIsSoundLoop)}
+                      isChecked={createSoundLoop}
+                      onToggle={() => setCreateSoundLoop(!createSoundLoop)}
                       style={{marginLeft: 50}}
                     />
                   </HStack>
@@ -251,7 +251,7 @@ const App = () => {
                     <Switch
                       size="lg"
                       colorScheme="emerald"
-                      isChecked={createIsVibration}
+                      isChecked={createVibration}
                       onToggle={() => toggleCreateVibration()}
                       style={{marginLeft: 50}}
                     />
@@ -261,9 +261,9 @@ const App = () => {
                     <Switch
                       size="lg"
                       colorScheme="emerald"
-                      isChecked={createIsNotiRemovable}
+                      isChecked={createNotiRemovable}
                       onToggle={() =>
-                        setCreateIsNotiRemovable(!createIsNotiRemovable)
+                        setCreateNotiRemovable(!createNotiRemovable)
                       }
                       style={{marginLeft: 50}}
                     />
@@ -306,15 +306,15 @@ const App = () => {
 
   const createAlarm = () => {
     const alarmInfo = {
+      alarm_time: dateToTime(date),
       alarm_title: createTitle,
       alarm_text: createText,
       alarm_sound: soundList[createSound].src,
-      alarm_isSoundLoop: createIsSoundLoop,
-      alarm_vibration: createIsVibration,
       alarm_icon: iconList[createIcon],
-      alarm_time: dateToTime(date),
+      alarm_sound_loop: createSoundLoop,
+      alarm_vibration: createVibration,
+      alarm_noti_removable: createNotiRemovable,
       alarm_activate: true,
-      alarm_isNotiRemovable: createIsNotiRemovable,
     };
 
     Alarm.schedule(
@@ -394,8 +394,8 @@ const App = () => {
               <Switch
                 size="lg"
                 colorScheme="emerald"
-                isChecked={createIsSoundLoop}
-                onToggle={() => setCreateIsSoundLoop(!createIsSoundLoop)}
+                isChecked={createSoundLoop}
+                onToggle={() => setCreateSoundLoop(!createSoundLoop)}
                 style={{marginLeft: 50}}
               />
             </HStack>
@@ -404,7 +404,7 @@ const App = () => {
               <Switch
                 size="lg"
                 colorScheme="emerald"
-                isChecked={createIsVibration}
+                isChecked={createVibration}
                 onToggle={() => toggleCreateVibration()}
                 style={{marginLeft: 50}}
               />
@@ -414,10 +414,8 @@ const App = () => {
               <Switch
                 size="lg"
                 colorScheme="emerald"
-                isChecked={createIsNotiRemovable}
-                onToggle={() =>
-                  setCreateIsNotiRemovable(!createIsNotiRemovable)
-                }
+                isChecked={createNotiRemovable}
+                onToggle={() => setCreateNotiRemovable(!createNotiRemovable)}
                 style={{marginLeft: 50}}
               />
             </HStack>

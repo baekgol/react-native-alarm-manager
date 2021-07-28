@@ -18,18 +18,6 @@ public class AlarmService extends Service {
     private MediaPlayer mediaPlayer;
     private final String channelId = "alarm";
 
-    private Class getMainActivity(){
-        Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
-        String className = intent.getComponent().getClassName();
-
-        try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,17 +37,20 @@ public class AlarmService extends Service {
         notiIntent.putExtra("id", intent.getIntExtra("id", 0));
         notiIntent.putExtra("hour", intent.getIntExtra("hour", 0));
         notiIntent.putExtra("minute", intent.getIntExtra("minute", 0));
-        notiIntent.putExtra("isActivate", true);
+        notiIntent.putExtra("activate", true);
 
         PendingIntent notiPendingIntent = PendingIntent.getActivity(this, 0, notiIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(getResources().getIdentifier(intent.getStringExtra("icon"), "drawable", packageName))
                 .setContentTitle(intent.getStringExtra("title"))
                 .setContentText(intent.getStringExtra("text"))
+                .setSmallIcon(getResources().getIdentifier(intent.getStringExtra("icon"), "drawable", packageName))
+                .setOngoing(intent.getBooleanExtra("notiRemovable", false))
                 .setContentIntent(notiPendingIntent)
-                .setOngoing(intent.getBooleanExtra("isNotiRemovable", false))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        System.out.println("notiRemovable service");
+        System.out.println(!intent.getBooleanExtra("notiRemovable", true));
 
         this.startForeground(1, builder.build());
 
@@ -70,7 +61,7 @@ public class AlarmService extends Service {
 
         int resId = this.getResources().getIdentifier(intent.getStringExtra("sound"), "raw", packageName);
         mediaPlayer = MediaPlayer.create(this, resId);
-        mediaPlayer.setLooping(intent.getBooleanExtra("isSoundLoop", false));
+        mediaPlayer.setLooping(intent.getBooleanExtra("soundLoop", true));
         mediaPlayer.start();
 
         return START_STICKY;
@@ -90,5 +81,17 @@ public class AlarmService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private Class getMainActivity(){
+        Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
+        String className = intent.getComponent().getClassName();
+
+        try {
+            return Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

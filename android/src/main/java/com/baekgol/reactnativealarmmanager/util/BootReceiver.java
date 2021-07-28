@@ -54,13 +54,15 @@ public class BootReceiver extends BroadcastReceiver {
 
                 Intent alarmIntent = new Intent(context, AlarmReceiver.class);
                 alarmIntent.putExtra("id", alarm.getAlarmId());
+                alarmIntent.putExtra("hour", hour);
+                alarmIntent.putExtra("minute", minute);
                 alarmIntent.putExtra("title", alarm.getAlarmTitle());
                 alarmIntent.putExtra("text", alarm.getAlarmText());
                 alarmIntent.putExtra("sound", alarm.getAlarmSound());
-                alarmIntent.putExtra("vibration", alarm.isAlarmVibration());
                 alarmIntent.putExtra("icon", alarm.getAlarmIcon());
-                alarmIntent.putExtra("hour", hour);
-                alarmIntent.putExtra("minute", minute);
+                alarmIntent.putExtra("soundLoop", alarm.isAlarmSoundLoop());
+                alarmIntent.putExtra("vibration", alarm.isAlarmVibration());
+                alarmIntent.putExtra("notiRemovable", alarm.isAlarmNotiRemovable());
 
                 PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarm.getAlarmId(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);

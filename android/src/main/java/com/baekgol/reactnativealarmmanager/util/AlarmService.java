@@ -48,7 +48,6 @@ public class AlarmService extends Service {
                 .setContentIntent(notiPendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-
         this.startForeground(1, builder.build());
 
         if(intent.getBooleanExtra("vibration", true)){

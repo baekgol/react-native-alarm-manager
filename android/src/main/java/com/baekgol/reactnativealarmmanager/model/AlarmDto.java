@@ -43,10 +43,6 @@ public class AlarmDto {
     private boolean alarmVibration;
 
     @NonNull
-    @ColumnInfo(name="alarm_noti_removable")
-    private boolean alarmNotiRemovable;
-
-    @NonNull
     @ColumnInfo(name="alarm_activate", defaultValue = "true")
     private boolean alarmActivate;
 
@@ -106,10 +102,6 @@ public class AlarmDto {
 
     public void setAlarmVibration(boolean alarmVibration) { this.alarmVibration = alarmVibration; }
 
-    public boolean isAlarmNotiRemovable() { return alarmNotiRemovable; }
-
-    public void setAlarmNotiRemovable(boolean alarmNotiRemovable) { this.alarmNotiRemovable = alarmNotiRemovable; }
-
     public boolean isAlarmActivate() {
         return alarmActivate;
     }
@@ -129,7 +121,6 @@ public class AlarmDto {
                 ", alarmIcon=" + alarmIcon +
                 ", alarmSoundLoop=" + alarmSoundLoop +
                 ", alarmVibration=" + alarmVibration +
-                ", alarmNotiRemovable=" + alarmNotiRemovable +
                 ", alarmActivate=" + alarmActivate +
                 "}";
     }

@@ -39,6 +39,8 @@ const App = () => {
   const [modifySoundLoop, setModifySoundLoop] = useState(true);
   const [createVibration, setCreateVibration] = useState(true);
   const [modifyVibration, setModifyVibration] = useState(true);
+  const [createNotiRemovable, setCreateNotiRemovable] = useState(true);
+  const [modifyNotiRemovable, setModifyNotiRemovable] = useState(true);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [isListModal, setIsListModal] = useState(false);
   const [isModifyModal, setIsModifyModal] = useState(false);
@@ -283,9 +285,7 @@ const App = () => {
         setAlarmList(success);
         setIsListModal(true);
       },
-      fail => {
-        console.log(fail);
-      },
+      fail => alert(fail),
     );
   };
 
@@ -298,43 +298,49 @@ const App = () => {
       alarm_icon: iconList[createIcon],
       alarm_sound_loop: createSoundLoop,
       alarm_vibration: createVibration,
+      alarm_noti_removable: createNotiRemovable,
       alarm_activate: true,
     };
 
     Alarm.schedule(
       alarmInfo,
-      success => {
-        console.log(success);
-      },
-      fail => {
-        alert(fail);
-      },
+      success => alert(success),
+      fail => alert(fail),
     );
   };
 
   const deleteAlarm = (id, idx) => {
     Alarm.delete(
       id,
-      success => {
+      () => {
         const list = alarmList.slice();
         list.splice(idx, 1);
         setAlarmList(list);
-        console.log(success);
       },
-      fail => {
-        alert(fail);
-      },
+      fail => alert(fail),
+    );
+  };
+
+  const stopAlarm = () => {
+    Alarm.stop(
+      success => alert(success),
+      fail => alert(fail),
     );
   };
 
   return (
     <NativeBaseProvider>
-      <Button
-        variant="ghost"
-        onPress={() => showList()}
-        style={{alignSelf: 'flex-end', marginRight: 20}}>
-        Alarm List
-      </Button>
+      <HStack justifyContent="flex-end">
+        <Button variant="ghost" onPress={() => stopAlarm()}>
+          Stop Alarm
+        </Button>
+        <Button
+          variant="ghost"
+          onPress={() => showList()}
+          style={{marginRight: 20}}>
+          Alarm List
+        </Button>
+      </HStack>
       <ScrollView>
         <Center>
           {getListModal()}
@@ -405,6 +411,16 @@ const App = () => {
                 colorScheme="emerald"
                 isChecked={createVibration}
                 onToggle={() => toggleCreateVibration()}
+                style={{marginLeft: 50}}
+              />
+            </HStack>
+            <HStack justifyContent="space-between">
+              <Heading size="md">Notification Removable</Heading>
+              <Switch
+                size="lg"
+                colorScheme="emerald"
+                isChecked={createNotiRemovable}
+                onToggle={() => setCreateNotiRemovable(!createNotiRemovable)}
                 style={{marginLeft: 50}}
               />
             </HStack>

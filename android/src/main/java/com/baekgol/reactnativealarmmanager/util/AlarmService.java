@@ -37,6 +37,7 @@ public class AlarmService extends Service {
         notiIntent.putExtra("id", intent.getIntExtra("id", 0));
         notiIntent.putExtra("hour", intent.getIntExtra("hour", 0));
         notiIntent.putExtra("minute", intent.getIntExtra("minute", 0));
+        notiIntent.putExtra("notiRemovable", intent.getBooleanExtra("notiRemovable", true));
         notiIntent.putExtra("activate", true);
 
         PendingIntent notiPendingIntent = PendingIntent.getActivity(this, 0, notiIntent, PendingIntent.FLAG_CANCEL_CURRENT);

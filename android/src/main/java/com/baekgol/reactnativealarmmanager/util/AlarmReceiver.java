@@ -24,6 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmServiceIntent.putExtra("icon", intent.getStringExtra("icon"));
         alarmServiceIntent.putExtra("soundLoop", intent.getBooleanExtra("soundLoop", true));
         alarmServiceIntent.putExtra("vibration", intent.getBooleanExtra("vibration", true));
+        alarmServiceIntent.putExtra("notiRemovable", intent.getBooleanExtra("notiRemovable", true));
 
         context.startForegroundService(alarmServiceIntent);
         scheduleNextAlarm(context, intent);

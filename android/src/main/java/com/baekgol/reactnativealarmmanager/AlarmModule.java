@@ -105,6 +105,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
           alarmIntent.putExtra("icon", alarm.getAlarmIcon());
           alarmIntent.putExtra("soundLoop", alarm.isAlarmSoundLoop());
           alarmIntent.putExtra("vibration", alarm.isAlarmVibration());
+          alarmIntent.putExtra("notiRemovable", alarm.isAlarmNotiRemovable());
 
           PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(reactContext, alarm.getAlarmId(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
           alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);
@@ -229,6 +230,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
             alarmIntent.putExtra("icon", newAlarm.getAlarmIcon());
             alarmIntent.putExtra("soundLoop", newAlarm.isAlarmSoundLoop());
             alarmIntent.putExtra("vibration", newAlarm.isAlarmVibration());
+            alarmIntent.putExtra("notiRemovable", newAlarm.isAlarmNotiRemovable());
 
             alarmPendingIntent = PendingIntent.getBroadcast(reactContext, newAlarm.getAlarmId(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);
@@ -322,6 +324,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     wm.putString("alarm_icon", dto.getAlarmIcon());
     wm.putBoolean("alarm_sound_loop", dto.isAlarmSoundLoop());
     wm.putBoolean("alarm_vibration", dto.isAlarmVibration());
+    wm.putBoolean("alarm_noti_removable", dto.isAlarmNotiRemovable());
     wm.putBoolean("alarm_activate", dto.isAlarmActivate());
 
     return wm;
@@ -347,6 +350,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     newAlarm.setAlarmIcon(rm.getString("alarm_icon"));
     newAlarm.setAlarmSoundLoop(rm.getBoolean("alarm_sound_loop"));
     newAlarm.setAlarmVibration(rm.getBoolean("alarm_vibration"));
+    newAlarm.setAlarmNotiRemovable(rm.getBoolean("alarm_noti_removable"));
     newAlarm.setAlarmActivate(rm.getBoolean("alarm_activate"));
 
     return newAlarm;

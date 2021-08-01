@@ -105,6 +105,25 @@ const App = props => {
     setIsModifyModal(false);
   };
 
+  const toggleAlarm = id => {
+    let tmpAlarm = null;
+
+    const tmpAlarmList = alarmList.map(item => {
+      if (id == item.alarm_id) {
+        tmpAlarm = {...item, alarm_activate: !item.alarm_activate};
+        return tmpAlarm;
+      } else return item;
+    });
+
+    setAlarmList(tmpAlarmList);
+
+    Alarm.modify(
+      tmpAlarm,
+      () => {},
+      fail => alert(fail),
+    );
+  };
+
   const getListModal = () => {
     return (
       <Modal
@@ -120,28 +139,29 @@ const App = props => {
                 const minute = alarm.alarm_time.substring(3, 5);
 
                 return (
-                  <HStack
-                    w="100%"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    key={alarm.alarm_id}>
-                    <Tag
-                      colorScheme="emerald"
-                      size="sm"
-                      rounded={'full'}
-                      variant="outline"
-                      style={{
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        borderWidth: 2,
-                      }}>
-                      <Text fontSize={20} bold>
-                        {`${hour}:${minute}`}
+                  <HStack justifyContent="space-between" key={alarm.alarm_id}>
+                    <HStack alignItems="center" w="55%">
+                      <Tag
+                        colorScheme={alarm.alarm_activate ? 'emerald' : 'gray'}
+                        size="sm"
+                        rounded={'full'}
+                        variant="outline"
+                        style={{
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          marginRight: 10,
+                          borderWidth: 2,
+                        }}>
+                        <Text
+                          fontSize={20}
+                          bold={alarm.alarm_activate ? true : false}>
+                          {`${hour}:${minute}`}
+                        </Text>
+                      </Tag>
+                      <Text fontSize={15} w="50%" isTruncated>
+                        {alarm.alarm_title}
                       </Text>
-                    </Tag>
-                    <Text fontSize={20} isTruncated>
-                      {alarm.alarm_title}
-                    </Text>
+                    </HStack>
                     <HStack>
                       <IconButton
                         colorScheme="emerald"
@@ -152,6 +172,12 @@ const App = props => {
                         colorScheme="secondary"
                         icon={<SmallCloseIcon />}
                         onPress={() => deleteAlarm(alarm.alarm_id, idx)}
+                      />
+                      <Switch
+                        size="md"
+                        colorScheme="emerald"
+                        isChecked={alarm.alarm_activate}
+                        onToggle={() => toggleAlarm(alarm.alarm_id)}
                       />
                     </HStack>
                   </HStack>

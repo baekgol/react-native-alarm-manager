@@ -43,8 +43,8 @@ const App = props => {
   const [createNotiRemovable, setCreateNotiRemovable] = useState(true);
   const [modifyNotiRemovable, setModifyNotiRemovable] = useState(true);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
-  const [isListModal, setIsListModal] = useState(false);
-  const [isModifyModal, setIsModifyModal] = useState(false);
+  const [listModal, setListModal] = useState(false);
+  const [modifyModal, setModifyModal] = useState(false);
   const [alarmList, setAlarmList] = useState([]);
 
   const soundList = [
@@ -102,7 +102,7 @@ const App = props => {
   const closeModifyModal = () => {
     soundPlayerList[modifySound].stop();
     setModifySound('0');
-    setIsModifyModal(false);
+    setModifyModal(false);
   };
 
   const toggleAlarm = id => {
@@ -127,8 +127,8 @@ const App = props => {
   const getListModal = () => {
     return (
       <Modal
-        isOpen={isListModal}
-        onClose={() => setIsListModal(false)}
+        isOpen={listModal}
+        onClose={() => setListModal(false)}
         closeOnOverlayClick={false}>
         <Modal.Content maxWidth="400px">
           <Modal.Header>Alarm List</Modal.Header>
@@ -166,7 +166,7 @@ const App = props => {
                       <IconButton
                         colorScheme="emerald"
                         icon={<InfoOutlineIcon />}
-                        onPress={() => setIsModifyModal(true)}
+                        onPress={() => setModifyModal(true)}
                       />
                       <IconButton
                         colorScheme="secondary"
@@ -189,7 +189,7 @@ const App = props => {
             <Button
               variant="ghost"
               onPress={() => {
-                setIsListModal(false);
+                setListModal(false);
               }}>
               Close
             </Button>
@@ -202,7 +202,7 @@ const App = props => {
   const getModifyModal = () => {
     return (
       <Modal
-        isOpen={isModifyModal}
+        isOpen={modifyModal}
         onClose={() => closeModifyModal()}
         closeOnOverlayClick={false}>
         <Modal.Content maxWidth="400px">
@@ -250,9 +250,30 @@ const App = props => {
                     <Select.Item label="Bliss" value="1" />
                     <Select.Item label="The Inspiration" value="2" />
                   </Select>
-                  <Heading size="md" style={{marginTop: 10}}>
-                    Icon
-                  </Heading>
+                  <HStack
+                    justifyContent="space-between"
+                    style={{marginTop: 10}}>
+                    <Heading size="md">Icon</Heading>
+                    <HStack>
+                      <Image
+                        source={{uri: iconList[0]}}
+                        size={25}
+                        alt={iconList[0]}
+                        style={{marginRight: 10}}
+                      />
+                      <Image
+                        source={{uri: iconList[1]}}
+                        size={25}
+                        alt={iconList[1]}
+                        style={{marginRight: 10}}
+                      />
+                      <Image
+                        source={{uri: iconList[2]}}
+                        size={25}
+                        alt={iconList[2]}
+                      />
+                    </HStack>
+                  </HStack>
                   <Select
                     selectedValue={createIcon}
                     onValueChange={value => setCreateIcon(value)}>
@@ -269,7 +290,6 @@ const App = props => {
                       colorScheme="emerald"
                       isChecked={createSoundLoop}
                       onToggle={() => setCreateSoundLoop(!createSoundLoop)}
-                      style={{marginLeft: 50}}
                     />
                   </HStack>
                   <HStack justifyContent="space-between">
@@ -279,14 +299,19 @@ const App = props => {
                       colorScheme="emerald"
                       isChecked={createVibration}
                       onToggle={() => toggleCreateVibration()}
-                      style={{marginLeft: 50}}
                     />
                   </HStack>
-                  <Button
-                    onPress={() => createAlarm()}
-                    style={{marginTop: 10, marginBottom: 30}}>
-                    Create Alarm
-                  </Button>
+                  <HStack justifyContent="space-between">
+                    <Heading size="md">Notification Removable</Heading>
+                    <Switch
+                      size="lg"
+                      colorScheme="emerald"
+                      isChecked={createNotiRemovable}
+                      onToggle={() =>
+                        setCreateNotiRemovable(!createNotiRemovable)
+                      }
+                    />
+                  </HStack>
                 </VStack>
               </Center>
             </ScrollView>
@@ -295,7 +320,7 @@ const App = props => {
             <Button
               variant="ghost"
               onPress={() => {
-                setIsModifyModal(false);
+                setModifyModal(false);
               }}>
               Modify
             </Button>
@@ -310,7 +335,7 @@ const App = props => {
       success => {
         soundPlayerList[createSound].stop();
         setAlarmList(success);
-        setIsListModal(true);
+        setListModal(true);
       },
       fail => alert(fail),
     );
@@ -447,7 +472,6 @@ const App = props => {
                 colorScheme="emerald"
                 isChecked={createSoundLoop}
                 onToggle={() => setCreateSoundLoop(!createSoundLoop)}
-                style={{marginLeft: 50}}
               />
             </HStack>
             <HStack justifyContent="space-between">
@@ -457,7 +481,6 @@ const App = props => {
                 colorScheme="emerald"
                 isChecked={createVibration}
                 onToggle={() => toggleCreateVibration()}
-                style={{marginLeft: 50}}
               />
             </HStack>
             <HStack justifyContent="space-between">
@@ -467,7 +490,6 @@ const App = props => {
                 colorScheme="emerald"
                 isChecked={createNotiRemovable}
                 onToggle={() => setCreateNotiRemovable(!createNotiRemovable)}
-                style={{marginLeft: 50}}
               />
             </HStack>
             <Button

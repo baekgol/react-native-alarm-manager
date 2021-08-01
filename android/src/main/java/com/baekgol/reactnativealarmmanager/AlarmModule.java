@@ -312,6 +312,25 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     }
   }
 
+  public static void stop(final Context context){
+    Runnable r = new Runnable(){
+      @Override
+      public void run(){
+        Intent alarmServiceIntent = new Intent(context, AlarmService.class);
+        context.stopService(alarmServiceIntent);
+      }
+    };
+
+    Thread thread = new Thread(r);
+    thread.start();
+
+    try{
+      thread.join();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
   WritableMap createMap(AlarmDto dto){
     DateFormat format = new SimpleDateFormat("HH:mm:ss");
     WritableMap wm = new WritableNativeMap();

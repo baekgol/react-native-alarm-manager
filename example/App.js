@@ -14,6 +14,7 @@ import {
   Modal,
   Text,
   Tag,
+  Image,
   IconButton,
   InfoOutlineIcon,
   SmallCloseIcon,
@@ -23,7 +24,7 @@ import moment from 'moment';
 import Sound from 'react-native-sound';
 import Alarm from 'react-native-alarm-manager';
 
-const App = () => {
+const App = props => {
   const hours = [];
   const minutes = [];
   const [date, setDate] = useState(new Date());
@@ -384,9 +385,28 @@ const App = () => {
               <Select.Item label="Bliss" value="1" />
               <Select.Item label="The Inspiration" value="2" />
             </Select>
-            <Heading size="md" style={{marginTop: 10}}>
-              Icon
-            </Heading>
+            <HStack justifyContent="space-between" style={{marginTop: 10}}>
+              <Heading size="md">Icon</Heading>
+              <HStack>
+                <Image
+                  source={{uri: iconList[0]}}
+                  size={25}
+                  alt={iconList[0]}
+                  style={{marginRight: 10}}
+                />
+                <Image
+                  source={{uri: iconList[1]}}
+                  size={25}
+                  alt={iconList[1]}
+                  style={{marginRight: 10}}
+                />
+                <Image
+                  source={{uri: iconList[2]}}
+                  size={25}
+                  alt={iconList[2]}
+                />
+              </HStack>
+            </HStack>
             <Select
               selectedValue={createIcon}
               onValueChange={value => setCreateIcon(value)}>

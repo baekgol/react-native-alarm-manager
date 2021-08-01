@@ -27,7 +27,8 @@ import Alarm from 'react-native-alarm-manager';
 const App = props => {
   const hours = [];
   const minutes = [];
-  const [date, setDate] = useState(new Date());
+  const [createDate, setCreateDate] = useState(new Date());
+  const [modifyDate, setModifyDate] = useState(null);
   const [createTitle, setCreateTitle] = useState('');
   const [modifyTitle, setModifyTitle] = useState('');
   const [createText, setCreateText] = useState('');
@@ -46,6 +47,7 @@ const App = props => {
   const [listModal, setListModal] = useState(false);
   const [modifyModal, setModifyModal] = useState(false);
   const [alarmList, setAlarmList] = useState([]);
+  const [modifyAlarm, setModifyAlarm] = useState(null);
 
   const soundList = [
     {name: 'Adventure', src: 'adventure'},
@@ -99,9 +101,31 @@ const App = props => {
     if (!modifyVibration) Vibration.vibrate();
   };
 
+  const openModifyModal = alarm => {
+    const date = new Date();
+    const tmpAlarmTime = alarm.alarm_time.split(':');
+
+    date.setHours(tmpAlarmTime[0]);
+    date.setMinutes(tmpAlarmTime[1]);
+    date.setSeconds(tmpAlarmTime[2]);
+
+    setModifyDate(date);
+
+    for (let i = 0; i < soundList.length; i++) {
+      if (soundList[i].src == modifyAlarm.alarm_sound) {
+        setModifySound(i);
+        break;
+      }
+    }
+
+    setModifyAlarm(alarm);
+    setModifyModal(true);
+  };
+
   const closeModifyModal = () => {
     soundPlayerList[modifySound].stop();
-    setModifySound('0');
+    // setModifySound('0');
+    setModifyAlarm(null);
     setModifyModal(false);
   };
 
@@ -166,7 +190,7 @@ const App = props => {
                       <IconButton
                         colorScheme="emerald"
                         icon={<InfoOutlineIcon />}
-                        onPress={() => setModifyModal(true)}
+                        onPress={() => openModifyModal(alarm)}
                       />
                       <IconButton
                         colorScheme="secondary"
@@ -200,7 +224,7 @@ const App = props => {
   };
 
   const getModifyModal = () => {
-    return (
+    return modifyAlarm != null ? (
       <Modal
         isOpen={modifyModal}
         onClose={() => closeModifyModal()}
@@ -214,12 +238,12 @@ const App = props => {
                 <VStack space={5}>
                   <Heading size="md">Time</Heading>
                   <TimePicker
-                    initDate={date}
+                    initDate={modifyDate}
                     hours={hours}
                     minutes={minutes}
                     onTimeSelected={currDate => {
-                      setDate(currDate);
-                      dateToTime(currDate);
+                      setModifyDate(currDate);
+                      modifyAlarm.alarm_time = dateToTime(modifyDate);
                     }}
                     style={{height: 200, width: 100}}
                     itemTextSize={25}
@@ -232,20 +256,24 @@ const App = props => {
                   <Input
                     variant="outline"
                     placeholder="Alarm Title"
-                    onChangeText={value => setCreateTitle(value)}
+                    value={modifyAlarm.alarm_title}
+                    onChangeText={value => (modifyAlarm.alarm_title = value)}
                     style={{marginBottom: 10}}
                   />
                   <Heading size="md">Text</Heading>
                   <Input
                     variant="outline"
                     placeholder="Alarm Text"
-                    onChangeText={value => setCreateText(value)}
+                    value={modifyAlarm.alarm_text}
+                    onChangeText={value => (modifyAlarm.alarm_text = value)}
                     style={{marginBottom: 10}}
                   />
                   <Heading size="md">Sound</Heading>
                   <Select
-                    selectedValue={createSound}
-                    onValueChange={value => selectCreateSound(value)}>
+                    selectedValue={modifySound}
+                    onValueChange={value =>
+                      (modifyAlarm.alarm_sound = soundList[value].src)
+                    }>
                     <Select.Item label="Adventure" value="0" />
                     <Select.Item label="Bliss" value="1" />
                     <Select.Item label="The Inspiration" value="2" />
@@ -327,7 +355,7 @@ const App = props => {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-    );
+    ) : null;
   };
 
   const showList = () => {
@@ -343,7 +371,7 @@ const App = props => {
 
   const createAlarm = () => {
     const alarmInfo = {
-      alarm_time: dateToTime(date),
+      alarm_time: dateToTime(createDate),
       alarm_title: createTitle,
       alarm_text: createText,
       alarm_sound: soundList[createSound].src,
@@ -400,13 +428,10 @@ const App = props => {
           <VStack space={5}>
             <Heading size="md">Time</Heading>
             <TimePicker
-              initDate={date}
+              initDate={createDate}
               hours={hours}
               minutes={minutes}
-              onTimeSelected={currDate => {
-                setDate(currDate);
-                dateToTime(currDate);
-              }}
+              onTimeSelected={currDate => setCreateDate(currDate)}
               style={{height: 200, width: 100}}
               itemTextSize={25}
               selectedItemTextSize={30}

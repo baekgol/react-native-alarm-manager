@@ -27,6 +27,7 @@ import Alarm from 'react-native-alarm-manager';
 const App = props => {
   const hours = [];
   const minutes = [];
+  const [modifyId, setModifyId] = useState(null);
   const [createDate, setCreateDate] = useState(new Date());
   const [modifyDate, setModifyDate] = useState(null);
   const [createTitle, setCreateTitle] = useState('');
@@ -47,7 +48,6 @@ const App = props => {
   const [listModal, setListModal] = useState(false);
   const [modifyModal, setModifyModal] = useState(false);
   const [alarmList, setAlarmList] = useState([]);
-  const [newAlarm, setNewAlarm] = useState(null);
 
   const soundList = ['adventure', 'bliss', 'the_inspiration'];
 
@@ -119,6 +119,7 @@ const App = props => {
       }
     }
 
+    setModifyId(alarm.alarm_id);
     setModifyTitle(alarm.alarm_title);
     setModifyText(alarm.alarm_text);
     setModifySoundLoop(alarm.alarm_sound_loop);
@@ -384,21 +385,35 @@ const App = props => {
   };
 
   const modifyAlarm = () => {
-    const alarmInfo = {
-      alarm_time: dateToTime(modifyDate),
-      alarm_title: modifyTitle,
-      alarm_text: modifyText,
-      alarm_sound: soundList[modifySound],
-      alarm_icon: iconList[modifyIcon],
-      alarm_sound_loop: modifySoundLoop,
-      alarm_vibration: modifyVibration,
-      alarm_noti_removable: modifyNotiRemovable,
-      alarm_activate: true,
-    };
+    let tmpAlarm = null;
+
+    const tmpAlarmList = alarmList.map(item => {
+      if (modifyId == item.alarm_id) {
+        tmpAlarm = {
+          alarm_id: modifyId,
+          alarm_time: dateToTime(modifyDate),
+          alarm_title: modifyTitle,
+          alarm_text: modifyText,
+          alarm_sound: soundList[modifySound],
+          alarm_icon: iconList[modifyIcon],
+          alarm_sound_loop: modifySoundLoop,
+          alarm_vibration: modifyVibration,
+          alarm_noti_removable: modifyNotiRemovable,
+          alarm_activate: true,
+        };
+        return tmpAlarm;
+      } else return item;
+    });
+
+    setAlarmList(tmpAlarmList);
 
     Alarm.modify(
-      alarmInfo,
-      success => alert(success),
+      tmpAlarm,
+      success => {
+        soundPlayerList[modifySound].stop();
+        setModifyModal(false);
+        alert(success);
+      },
       fail => alert(fail),
     );
   };

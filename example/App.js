@@ -30,30 +30,26 @@ const App = props => {
   const [createDate, setCreateDate] = useState(new Date());
   const [modifyDate, setModifyDate] = useState(null);
   const [createTitle, setCreateTitle] = useState('');
-  const [modifyTitle, setModifyTitle] = useState('');
+  const [modifyTitle, setModifyTitle] = useState(null);
   const [createText, setCreateText] = useState('');
-  const [modifyText, setModifyText] = useState('');
+  const [modifyText, setModifyText] = useState(null);
   const [createSound, setCreateSound] = useState('0');
-  const [modifySound, setModifySound] = useState('0');
+  const [modifySound, setModifySound] = useState(null);
   const [createIcon, setCreateIcon] = useState('0');
-  const [modifyIcon, setModifyIcon] = useState('0');
+  const [modifyIcon, setModifyIcon] = useState(null);
   const [createSoundLoop, setCreateSoundLoop] = useState(true);
-  const [modifySoundLoop, setModifySoundLoop] = useState(true);
+  const [modifySoundLoop, setModifySoundLoop] = useState(null);
   const [createVibration, setCreateVibration] = useState(true);
-  const [modifyVibration, setModifyVibration] = useState(true);
+  const [modifyVibration, setModifyVibration] = useState(null);
   const [createNotiRemovable, setCreateNotiRemovable] = useState(true);
-  const [modifyNotiRemovable, setModifyNotiRemovable] = useState(true);
+  const [modifyNotiRemovable, setModifyNotiRemovable] = useState(null);
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [listModal, setListModal] = useState(false);
   const [modifyModal, setModifyModal] = useState(false);
   const [alarmList, setAlarmList] = useState([]);
-  const [modifyAlarm, setModifyAlarm] = useState(null);
+  const [newAlarm, setNewAlarm] = useState(null);
 
-  const soundList = [
-    {name: 'Adventure', src: 'adventure'},
-    {name: 'Bliss', src: 'bliss'},
-    {name: 'The Inspiration', src: 'the_inspiration'},
-  ];
+  const soundList = ['adventure', 'bliss', 'the_inspiration'];
 
   const iconList = ['mail', 'user', 'like'];
 
@@ -68,9 +64,7 @@ const App = props => {
     const soundPlayers = [];
 
     for (let i = 0; i < 3; i++)
-      soundPlayers.push(
-        new Sound(soundList[i].src + '.mp3', Sound.MAIN_BUNDLE),
-      );
+      soundPlayers.push(new Sound(soundList[i] + '.mp3', Sound.MAIN_BUNDLE));
 
     setSoundPlayerList(soundPlayers);
   }, []);
@@ -112,20 +106,29 @@ const App = props => {
     setModifyDate(date);
 
     for (let i = 0; i < soundList.length; i++) {
-      if (soundList[i].src == modifyAlarm.alarm_sound) {
-        setModifySound(i);
+      if (soundList[i] == alarm.alarm_sound) {
+        setModifySound(i + '');
         break;
       }
     }
 
-    setModifyAlarm(alarm);
+    for (let i = 0; i < iconList.length; i++) {
+      if (iconList[i] == alarm.alarm_icon) {
+        setModifyIcon(i + '');
+        break;
+      }
+    }
+
+    setModifyTitle(alarm.alarm_title);
+    setModifyText(alarm.alarm_text);
+    setModifySoundLoop(alarm.alarm_sound_loop);
+    setModifyVibration(alarm.alarm_vibration);
+    setModifyNotiRemovable(alarm.alarm_noti_removable);
     setModifyModal(true);
   };
 
   const closeModifyModal = () => {
     soundPlayerList[modifySound].stop();
-    // setModifySound('0');
-    setModifyAlarm(null);
     setModifyModal(false);
   };
 
@@ -224,7 +227,7 @@ const App = props => {
   };
 
   const getModifyModal = () => {
-    return modifyAlarm != null ? (
+    return modifyModal ? (
       <Modal
         isOpen={modifyModal}
         onClose={() => closeModifyModal()}
@@ -241,10 +244,7 @@ const App = props => {
                     initDate={modifyDate}
                     hours={hours}
                     minutes={minutes}
-                    onTimeSelected={currDate => {
-                      setModifyDate(currDate);
-                      modifyAlarm.alarm_time = dateToTime(modifyDate);
-                    }}
+                    onTimeSelected={currDate => setModifyDate(currDate)}
                     style={{height: 200, width: 100}}
                     itemTextSize={25}
                     selectedItemTextSize={30}
@@ -256,24 +256,22 @@ const App = props => {
                   <Input
                     variant="outline"
                     placeholder="Alarm Title"
-                    value={modifyAlarm.alarm_title}
-                    onChangeText={value => (modifyAlarm.alarm_title = value)}
+                    value={modifyTitle}
+                    onChangeText={value => setModifyTitle(value)}
                     style={{marginBottom: 10}}
                   />
                   <Heading size="md">Text</Heading>
                   <Input
                     variant="outline"
                     placeholder="Alarm Text"
-                    value={modifyAlarm.alarm_text}
-                    onChangeText={value => (modifyAlarm.alarm_text = value)}
+                    value={modifyText}
+                    onChangeText={value => setModifyText(value)}
                     style={{marginBottom: 10}}
                   />
                   <Heading size="md">Sound</Heading>
                   <Select
                     selectedValue={modifySound}
-                    onValueChange={value =>
-                      (modifyAlarm.alarm_sound = soundList[value].src)
-                    }>
+                    onValueChange={value => selectModifySound(value)}>
                     <Select.Item label="Adventure" value="0" />
                     <Select.Item label="Bliss" value="1" />
                     <Select.Item label="The Inspiration" value="2" />
@@ -303,8 +301,8 @@ const App = props => {
                     </HStack>
                   </HStack>
                   <Select
-                    selectedValue={createIcon}
-                    onValueChange={value => setCreateIcon(value)}>
+                    selectedValue={modifyIcon}
+                    onValueChange={value => setModifyIcon(value)}>
                     <Select.Item label="Mail" value="0" />
                     <Select.Item label="User" value="1" />
                     <Select.Item label="Like" value="2" />
@@ -316,8 +314,8 @@ const App = props => {
                     <Switch
                       size="lg"
                       colorScheme="emerald"
-                      isChecked={createSoundLoop}
-                      onToggle={() => setCreateSoundLoop(!createSoundLoop)}
+                      isChecked={modifySoundLoop}
+                      onToggle={() => setModifySoundLoop(!modifySoundLoop)}
                     />
                   </HStack>
                   <HStack justifyContent="space-between">
@@ -325,8 +323,8 @@ const App = props => {
                     <Switch
                       size="lg"
                       colorScheme="emerald"
-                      isChecked={createVibration}
-                      onToggle={() => toggleCreateVibration()}
+                      isChecked={modifyVibration}
+                      onToggle={() => toggleModifyVibration()}
                     />
                   </HStack>
                   <HStack justifyContent="space-between">
@@ -334,9 +332,9 @@ const App = props => {
                     <Switch
                       size="lg"
                       colorScheme="emerald"
-                      isChecked={createNotiRemovable}
+                      isChecked={modifyNotiRemovable}
                       onToggle={() =>
-                        setCreateNotiRemovable(!createNotiRemovable)
+                        setModifyNotiRemovable(!modifyNotiRemovable)
                       }
                     />
                   </HStack>
@@ -345,11 +343,7 @@ const App = props => {
             </ScrollView>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              variant="ghost"
-              onPress={() => {
-                setModifyModal(false);
-              }}>
+            <Button variant="ghost" onPress={() => modifyAlarm()}>
               Modify
             </Button>
           </Modal.Footer>
@@ -374,7 +368,7 @@ const App = props => {
       alarm_time: dateToTime(createDate),
       alarm_title: createTitle,
       alarm_text: createText,
-      alarm_sound: soundList[createSound].src,
+      alarm_sound: soundList[createSound],
       alarm_icon: iconList[createIcon],
       alarm_sound_loop: createSoundLoop,
       alarm_vibration: createVibration,
@@ -383,6 +377,26 @@ const App = props => {
     };
 
     Alarm.schedule(
+      alarmInfo,
+      success => alert(success),
+      fail => alert(fail),
+    );
+  };
+
+  const modifyAlarm = () => {
+    const alarmInfo = {
+      alarm_time: dateToTime(modifyDate),
+      alarm_title: modifyTitle,
+      alarm_text: modifyText,
+      alarm_sound: soundList[modifySound],
+      alarm_icon: iconList[modifyIcon],
+      alarm_sound_loop: modifySoundLoop,
+      alarm_vibration: modifyVibration,
+      alarm_noti_removable: modifyNotiRemovable,
+      alarm_activate: true,
+    };
+
+    Alarm.modify(
       alarmInfo,
       success => alert(success),
       fail => alert(fail),

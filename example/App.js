@@ -449,6 +449,7 @@ const App = props => {
           style={{marginRight: 20}}>
           Alarm List
         </Button>
+        <Button variant="ghost">Open Source</Button>
       </HStack>
       <ScrollView>
         <Center>

@@ -374,6 +374,11 @@ const App = props => {
               </Link>
             </HStack>
           </Modal.Body>
+          <Modal.Footer>
+            <Button variant="ghost" onPress={() => setContactModal(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
         </Modal.Content>
       </Modal>
     ) : null;

@@ -15,6 +15,7 @@ import {
   Text,
   Tag,
   Image,
+  Link,
   IconButton,
   InfoOutlineIcon,
   SmallCloseIcon,
@@ -47,6 +48,7 @@ const App = props => {
   const [soundPlayerList, setSoundPlayerList] = useState(null);
   const [listModal, setListModal] = useState(false);
   const [modifyModal, setModifyModal] = useState(false);
+  const [contactModal, setContactModal] = useState(false);
   const [alarmList, setAlarmList] = useState([]);
 
   const soundList = ['adventure', 'bliss', 'the_inspiration'];
@@ -152,12 +154,9 @@ const App = props => {
     );
   };
 
-  const getListModal = () => {
-    return (
-      <Modal
-        isOpen={listModal}
-        onClose={() => setListModal(false)}
-        closeOnOverlayClick={false}>
+  const loadListModal = () => {
+    return listModal ? (
+      <Modal isOpen={listModal} closeOnOverlayClick={false}>
         <Modal.Content maxWidth="400px">
           <Modal.Header>Alarm List</Modal.Header>
           <Modal.Body>
@@ -224,10 +223,10 @@ const App = props => {
           </Modal.Footer>
         </Modal.Content>
       </Modal>
-    );
+    ) : null;
   };
 
-  const getModifyModal = () => {
+  const loadModifyModal = () => {
     return modifyModal ? (
       <Modal
         isOpen={modifyModal}
@@ -353,6 +352,33 @@ const App = props => {
     ) : null;
   };
 
+  const loadContactModal = () => {
+    return contactModal ? (
+      <Modal isOpen={contactModal} closeOnOverlayClick={false}>
+        <Modal.Content maxWidth="200px">
+          <Modal.Header>Contact</Modal.Header>
+          <Modal.Body>
+            <HStack>
+              <Text
+                fontSize="lg"
+                alignSelf="center"
+                style={{marginRight: 5}}
+                bold>
+                Baekgol
+              </Text>
+              <Link
+                _text={{color: 'blue.700'}}
+                href="https://github.com/baekgol"
+                isExternal>
+                (Github)
+              </Link>
+            </HStack>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+    ) : null;
+  };
+
   const showList = () => {
     Alarm.searchAll(
       success => {
@@ -449,12 +475,12 @@ const App = props => {
           style={{marginRight: 20}}>
           Alarm List
         </Button>
-        <Button variant="ghost">Open Source</Button>
       </HStack>
       <ScrollView>
         <Center>
-          {getListModal()}
-          {getModifyModal()}
+          {loadListModal()}
+          {loadModifyModal()}
+          {loadContactModal()}
           <VStack space={5}>
             <Heading size="md">Time</Heading>
             <TimePicker
@@ -554,6 +580,20 @@ const App = props => {
             </Button>
           </VStack>
         </Center>
+        <HStack
+          justifyContent="flex-end"
+          style={{marginRight: 10, marginBottom: 10}}>
+          <Button
+            variant="ghost"
+            size="xs"
+            onPress={() => setContactModal(true)}
+            style={{marginRight: 10}}>
+            Contact
+          </Button>
+          <Button variant="ghost" size="xs" onPress={() => stopAlarm()}>
+            Open Source
+          </Button>
+        </HStack>
       </ScrollView>
     </NativeBaseProvider>
   );

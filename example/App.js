@@ -185,34 +185,31 @@ const App = props => {
   };
 
   const modifyAlarm = () => {
-    let tmpAlarm = null;
-
-    const tmpAlarmList = alarmList.map(item => {
-      if (modifyId == item.alarm_id) {
-        tmpAlarm = {
-          alarm_id: modifyId,
-          alarm_time: dateToTime(modifyDate),
-          alarm_title: modifyTitle,
-          alarm_text: modifyText,
-          alarm_sound: soundList[modifySound],
-          alarm_icon: iconList[modifyIcon],
-          alarm_sound_loop: modifySoundLoop,
-          alarm_vibration: modifyVibration,
-          alarm_noti_removable: modifyNotiRemovable,
-          alarm_activate: true,
-        };
-        return tmpAlarm;
-      } else return item;
-    });
-
-    setAlarmList(tmpAlarmList);
+    const alarmInfo = {
+      alarm_id: modifyId,
+      alarm_time: dateToTime(modifyDate),
+      alarm_title: modifyTitle,
+      alarm_text: modifyText,
+      alarm_sound: soundList[modifySound],
+      alarm_icon: iconList[modifyIcon],
+      alarm_sound_loop: modifySoundLoop,
+      alarm_vibration: modifyVibration,
+      alarm_noti_removable: modifyNotiRemovable,
+      alarm_activate: true,
+    };
 
     Alarm.modify(
-      tmpAlarm,
-      success => {
-        soundPlayerList[modifySound].stop();
-        setModifyModal(false);
-        alert(success);
+      alarmInfo,
+      success1 => {
+        Alarm.searchAll(
+          success2 => {
+            soundPlayerList[modifySound].stop();
+            setAlarmList(success2);
+            setModifyModal(false);
+            alert(success1);
+          },
+          fail => alert(fail),
+        );
       },
       fail => alert(fail),
     );

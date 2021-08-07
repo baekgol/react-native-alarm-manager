@@ -21,9 +21,8 @@ public class BootReceiver extends BroadcastReceiver {
             searchAll(context);
 
             if (alarms.length != 0) {
-                for (AlarmDto alarm : alarms) {
+                for (AlarmDto alarm : alarms)
                     schedule(context, alarm);
-                }
             }
         }
     }

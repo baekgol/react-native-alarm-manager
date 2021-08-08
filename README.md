@@ -20,8 +20,6 @@ Alarm manager for React Native
 - sdk version >=28
 - manifest fix
 - drawable: icon, raw: sound
-- Make [zzz](https://zzz) aaa
-
 
 ## a
 

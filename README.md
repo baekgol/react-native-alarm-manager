@@ -2,7 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/react-native-alarm-manager)](https://www.npmjs.org/package/react-native-alarm-manager)
 [![install size](https://packagephobia.com/badge?p=react-native-alarm-manager)](https://packagephobia.com/result?p=react-native-alarm-manager)
-[![android](https://img.shields.io/badge/Android-9.0-3DDC84?logo=android)](https://github.com/tensorflow/tensorflow/releases/tag/v2.2.0)
+![android](https://img.shields.io/badge/Android->=9.0-3DDC84?logo=android)
+![react-native](https://img.shields.io/badge/ReactNative->=0.60.0-61DAFB?logo=react)
 
 Alarm manager for React Native
 

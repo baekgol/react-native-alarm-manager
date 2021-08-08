@@ -17,7 +17,7 @@ Alarm manager for React Native
       - [eee](#eee)
 
 ## Install
-
+- sdk version >=28
 - Make [zzz](https://zzz) aaa
 
 

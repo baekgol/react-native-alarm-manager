@@ -18,6 +18,7 @@ Alarm manager for React Native
 
 ## Install
 - sdk version >=28
+- manifest fix
 - Make [zzz](https://zzz) aaa
 
 

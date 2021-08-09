@@ -38,7 +38,6 @@ $ npm install react-native-alarm-manager
 ## c
 
 ### test
-test
 
 ```js
 const test = test;

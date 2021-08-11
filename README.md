@@ -23,9 +23,9 @@ Alarm manager for React Native
 
 ## a
 
-![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) |
---- | --- |
-1 | 2 |
+![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) |
+--- |
+1 |
 
 ## b
 

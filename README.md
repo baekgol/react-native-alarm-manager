@@ -40,7 +40,7 @@ $ npm install react-native-alarm-manager
 ### test
 
 ```js
-// test
+// testtest
 ```
 
 ## License

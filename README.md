@@ -9,7 +9,7 @@ Alarm manager for React Native
 
 ## Table of Contents
 
-  - [Installation](#installation)
+  - [Installation](#intallation)
   - [aaa](#aaa)
     - [bbb](#bbb)
     - [ccc](#ccc)
@@ -18,7 +18,7 @@ Alarm manager for React Native
 
 ## Installation
 
-### Add package
+### Adding the package
 
 #### npm
 
@@ -29,10 +29,15 @@ $ npm install react-native-alarm-manager
 #### yarn
 
 ```bash
-$ yarm add react-native-alarm-manager
+$ yarn add react-native-alarm-manager
 ```
 
-### AndroidManifest.xml
+### Manipulating codes in your project
+
+#### (1) Check android sdk version
+#### (2) Register components
+
+Go to AndroidManifest.xml and register the service and receiver
 
 ```
 <manifest ... >
@@ -48,6 +53,7 @@ $ yarm add react-native-alarm-manager
               <action android:name="android.intent.action.BOOT_COMPLETED" />
           </intent-filter>
       </receiver>
+      
     </application>
 </manifest>
 ```

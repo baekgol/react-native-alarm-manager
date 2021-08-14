@@ -35,9 +35,25 @@ $ yarn add react-native-alarm-manager
 ### Manipulating codes in your project
 
 #### (1) Check android sdk version
+
+Android sdk version must be 28 or higher.  
+If the version does not match, make the correct changes in build.gradle in your project.
+
+```
+buildscript {
+    ext {
+        ...
+        minSdkVersion = 28
+        compileSdkVersion = 28
+        targetSdkVersion = 28
+    }
+    ...
+}
+```
+
 #### (2) Register components
 
-Go to AndroidManifest.xml and register the service and receiver
+Go to AndroidManifest.xml and register the service and receiver.
 
 ```
 <manifest ... >
@@ -57,9 +73,16 @@ Go to AndroidManifest.xml and register the service and receiver
     </application>
 </manifest>
 ```
-- sdk version >=28
-- manifest fix
-- drawable: icon, raw: sound
+
+#### (3) Create resource directory
+
+Configure your project's resource directory.  
+This is a necessary process to apply the alarm sound and notification icon.
+
+```
+project/app/src/main/res/raw       // alarm sound
+project/app/src/main/res/drawable  // notification icon
+```
 
 ## a
 

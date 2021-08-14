@@ -9,14 +9,48 @@ Alarm manager for React Native
 
 ## Table of Contents
 
-  - [Install](#install)
+  - [Installation](#installation)
   - [aaa](#aaa)
     - [bbb](#bbb)
     - [ccc](#ccc)
       - [ddd](#ddd)
       - [eee](#eee)
 
-## Install
+## Installation
+
+### Add package
+
+#### npm
+
+```bash
+$ npm install react-native-alarm-manager
+```
+
+#### yarn
+
+```bash
+$ yarm add react-native-alarm-manager
+```
+
+### AndroidManifest.xml
+
+```
+<manifest ... >
+    <application ... >
+      <activity ... >
+      </activity>
+      
+      <!-- Add the following code -->
+      <service android:name="com.baekgol.reactnativealarmmanager.util.AlarmService" android:enabled="true" android:exported="false" />
+      <receiver android:name="com.baekgol.reactnativealarmmanager.util.AlarmReceiver" android:enabled="true" android:exported="false" />
+      <receiver android:name="com.baekgol.reactnativealarmmanager.util.BootReceiver" android:enabled="false" android:exported="false" >
+          <intent-filter android:priority="999">
+              <action android:name="android.intent.action.BOOT_COMPLETED" />
+          </intent-filter>
+      </receiver>
+    </application>
+</manifest>
+```
 - sdk version >=28
 - manifest fix
 - drawable: icon, raw: sound

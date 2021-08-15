@@ -84,6 +84,8 @@ project/app/src/main/res/raw       // alarm sound
 project/app/src/main/res/drawable  // notification icon
 ```
 
+#### (4) mainactivity
+
 ## a
 
 ![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) |

@@ -118,11 +118,11 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
     try{
       thread.join();
-      if(alarm!=null) success.invoke("success to add alarm");
-      else fail.invoke("이미 알람이 설정되어 있습니다.");
+      if(alarm!=null) success.invoke("Alarm scheduling was successful.");
+      else fail.invoke("An alarm set for this time already exists.");
     } catch (InterruptedException e) {
       e.printStackTrace();
-      fail.invoke("알람을 생성하는 동안 오류가 발생하였습니다.");
+      fail.invoke("An error occurred while scheduling the alarm.");
     }finally{
       alarm = null;
     }
@@ -144,10 +144,10 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     try{
       thread.join();
       if(alarm!=null) success.invoke(createMap(alarm));
-      else fail.invoke("fail to load alarm");
+      else fail.invoke("An error occurred while searching the alarm.");
     } catch (InterruptedException e) {
       e.printStackTrace();
-      fail.invoke("fail to load alarm detail");
+      fail.invoke("An error occurred while searching the alarm.");
     }finally{
       alarm = null;
     }
@@ -171,7 +171,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
       success.invoke(createArray(alarms));
     } catch (InterruptedException e) {
       e.printStackTrace();
-      fail.invoke("fail to load alarms");
+      fail.invoke("An error occurred while searching alarms.");
     }finally{
       alarms = null;
     }
@@ -244,11 +244,11 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
     try{
       thread.join();
-      if(affectedCnt!=0) success.invoke("success to modify alarm");
-      else fail.invoke("알람을 수정하는 동안 오류가 발생하였습니다.");
+      if(affectedCnt!=0) success.invoke("Alarm modification was successful.");
+      else fail.invoke("An error occurred while modifying the alarm.");
     } catch (InterruptedException e) {
       e.printStackTrace();
-      fail.invoke("알람을 수정하는 동안 오류가 발생하였습니다.");
+      fail.invoke("An error occurred while modifying the alarm.");
     }finally{
       affectedCnt = 0;
     }
@@ -280,11 +280,11 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
     try{
       thread.join();
-      if(affectedCnt!=0) success.invoke("success to delete alarm");
-      else fail.invoke("fail to delete alarm");
+      if(affectedCnt!=0) success.invoke("Alarm deleting was successful.");
+      else fail.invoke("An error occurred while deleting the alarm.");
     } catch (InterruptedException e) {
       e.printStackTrace();
-      fail.invoke("fail to delete alarm");
+      fail.invoke("An error occurred while deleting the alarm.");
     }finally{
       affectedCnt = 0;
     }
@@ -305,10 +305,10 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
     try{
       thread.join();
-      success.invoke("success to stop alarm");
+      success.invoke("Alarm stoping was successful.");
     } catch (InterruptedException e) {
       e.printStackTrace();
-      fail.invoke("fail to stop alarm");
+      fail.invoke("An error occurred while stoping the alarm.");
     }
   }
 

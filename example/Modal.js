@@ -34,55 +34,59 @@ const loadListModal = (
         <Modal.Header>Alarm List</Modal.Header>
         <Modal.Body>
           <VStack>
-            {alarmList.map((alarm, idx) => {
-              const hour = alarm.alarm_time.substring(0, 2);
-              const minute = alarm.alarm_time.substring(3, 5);
+            {alarmList.length != 0 ? (
+              alarmList.map((alarm, idx) => {
+                const hour = alarm.alarm_time.substring(0, 2);
+                const minute = alarm.alarm_time.substring(3, 5);
 
-              return (
-                <HStack justifyContent="space-between" key={alarm.alarm_id}>
-                  <HStack alignItems="center" w="55%">
-                    <Tag
-                      colorScheme={alarm.alarm_activate ? 'emerald' : 'gray'}
-                      size="sm"
-                      rounded={'full'}
-                      variant="outline"
-                      style={{
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        marginRight: 10,
-                        borderWidth: 2,
-                      }}>
-                      <Text
-                        fontSize={20}
-                        bold={alarm.alarm_activate ? true : false}>
-                        {`${hour}:${minute}`}
+                return (
+                  <HStack justifyContent="space-between" key={alarm.alarm_id}>
+                    <HStack alignItems="center" w="55%">
+                      <Tag
+                        colorScheme={alarm.alarm_activate ? 'emerald' : 'gray'}
+                        size="sm"
+                        rounded={'full'}
+                        variant="outline"
+                        style={{
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          marginRight: 10,
+                          borderWidth: 2,
+                        }}>
+                        <Text
+                          fontSize={20}
+                          bold={alarm.alarm_activate ? true : false}>
+                          {`${hour}:${minute}`}
+                        </Text>
+                      </Tag>
+                      <Text fontSize={15} w="50%" isTruncated>
+                        {alarm.alarm_title}
                       </Text>
-                    </Tag>
-                    <Text fontSize={15} w="50%" isTruncated>
-                      {alarm.alarm_title}
-                    </Text>
+                    </HStack>
+                    <HStack>
+                      <IconButton
+                        colorScheme="emerald"
+                        icon={<InfoOutlineIcon />}
+                        onPress={() => openModifyModal(alarm)}
+                      />
+                      <IconButton
+                        colorScheme="secondary"
+                        icon={<SmallCloseIcon />}
+                        onPress={() => deleteAlarm(alarm.alarm_id, idx)}
+                      />
+                      <Switch
+                        size="md"
+                        colorScheme="emerald"
+                        isChecked={alarm.alarm_activate}
+                        onToggle={() => toggleAlarm(alarm.alarm_id)}
+                      />
+                    </HStack>
                   </HStack>
-                  <HStack>
-                    <IconButton
-                      colorScheme="emerald"
-                      icon={<InfoOutlineIcon />}
-                      onPress={() => openModifyModal(alarm)}
-                    />
-                    <IconButton
-                      colorScheme="secondary"
-                      icon={<SmallCloseIcon />}
-                      onPress={() => deleteAlarm(alarm.alarm_id, idx)}
-                    />
-                    <Switch
-                      size="md"
-                      colorScheme="emerald"
-                      isChecked={alarm.alarm_activate}
-                      onToggle={() => toggleAlarm(alarm.alarm_id)}
-                    />
-                  </HStack>
-                </HStack>
-              );
-            })}
+                );
+              })
+            ) : (
+              <Text>No Alarm</Text>
+            )}
           </VStack>
         </Modal.Body>
         <Modal.Footer>

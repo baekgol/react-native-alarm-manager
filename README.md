@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/react-native-alarm-manager)](https://www.npmjs.org/package/react-native-alarm-manager)
 [![install size](https://packagephobia.com/badge?p=react-native-alarm-manager)](https://packagephobia.com/result?p=react-native-alarm-manager)
-![android](https://img.shields.io/badge/Android->=9.0-3DDC84?logo=android)
+![android](https://img.shields.io/badge/Android->=10.0-3DDC84?logo=android)
 ![react-native](https://img.shields.io/badge/ReactNative->=0.60.0-61DAFB?logo=react)
 
 Alarm manager for React Native
@@ -34,22 +34,11 @@ $ yarn add react-native-alarm-manager
 
 ### Manipulating codes in your project
 
-#### (1) Check android sdk version
+#### (1) Check Android SDK
 
-Android sdk version must be 28 or higher.  
-If the version does not match, make the correct changes in build.gradle in your project.
-
-```
-buildscript {
-    ext {
-        ...
-        minSdkVersion = 28
-        compileSdkVersion = 28
-        targetSdkVersion = 28
-    }
-    ...
-}
-```
+This package is compiled with Android SDK Platform 29.  
+Your project SDK version doesn't matter.  
+Android SDK Platform 29 must be installed.
 
 #### (2) Register components
 
@@ -74,7 +63,42 @@ Go to AndroidManifest.xml and register the service and receiver.
 </manifest>
 ```
 
-#### (3) Create resource directory
+#### (3) MainActivity
+
+Go to MainActivity.java and override the onCreate and createReactActivityDelegate methods as follows.
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+
+  ComponentName receiver = new ComponentName(this, BootReceiver.class);
+  PackageManager packageManager = this.getPackageManager();
+
+  packageManager.setComponentEnabledSetting(receiver,
+          PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+          PackageManager.DONT_KILL_APP);
+}
+
+@Override
+protected ReactActivityDelegate createReactActivityDelegate() {
+  return new ReactActivityDelegate(this, getMainComponentName()){
+    @Nullable
+    @Override
+    protected Bundle getLaunchOptions() {
+      Intent intent = getIntent();
+      Bundle bundle = intent.getExtras();
+
+      if(intent.getBooleanExtra("notiRemovable", true))
+        AlarmModule.stop(this.getContext());
+
+      return bundle;
+    }
+  };
+}
+```
+
+#### (4) Create resource directory
 
 Configure your project's resource directory.  
 This is a necessary process to apply the alarm sound and notification icon.
@@ -83,8 +107,6 @@ This is a necessary process to apply the alarm sound and notification icon.
 project/app/src/main/res/raw       // alarm sound
 project/app/src/main/res/drawable  // notification icon
 ```
-
-#### (4) mainactivity
 
 ## a
 

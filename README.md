@@ -9,11 +9,10 @@ Alarm manager for React Native
 ## Table of Contents
 
   - [Installation](#intallation)
-  - [aaa](#aaa)
-    - [bbb](#bbb)
-    - [ccc](#ccc)
-      - [ddd](#ddd)
-      - [eee](#eee)
+    - [Adding the package](#installation-1)
+      - [npm](#installation-1-1)
+      - [yarn](#installation-1-2)
+    - [Manipulating codes in your project](#installation-2)
 
 ## Installation
 

@@ -13,6 +13,10 @@ Alarm manager for React Native
       - [npm](#npm)
       - [yarn](#yarn)
     - [Manipulating codes in your project](#manipulating-codes-in-your-project)
+      - [Check Android SDK](#check-android-sdk)
+      - [Register components](#register-components)
+      - [Overriding MainActivity Methods](#overriding-mainactivity-methods)
+      - [Create resource directory](#create-resource-directory)
 
 ## Installation
 
@@ -32,13 +36,13 @@ $ yarn add react-native-alarm-manager
 
 ### Manipulating codes in your project
 
-#### (1) Check Android SDK
+#### Check Android SDK
 
 This package is compiled with Android SDK Platform 29.  
 Your project SDK version doesn't matter.  
 Android SDK Platform 29 must be installed.
 
-#### (2) Register components
+#### Register components
 
 Go to AndroidManifest.xml and register the service and receiver.
 
@@ -61,7 +65,7 @@ Go to AndroidManifest.xml and register the service and receiver.
 </manifest>
 ```
 
-#### (3) Overriding MainActivity Methods
+#### Overriding MainActivity Methods
 
 Go to MainActivity.java and override the onCreate and createReactActivityDelegate methods as follows.  
 It can work properly during the process of calling parameters and rebooting the android with alarm functions.
@@ -97,7 +101,7 @@ protected ReactActivityDelegate createReactActivityDelegate() {
 }
 ```
 
-#### (4) Create resource directory
+#### Create resource directory
 
 Configure your project's resource directory.  
 This is a necessary process to apply the alarm sound and notification icon.

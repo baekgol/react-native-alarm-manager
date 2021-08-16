@@ -8,11 +8,11 @@ Alarm manager for React Native
 
 ## Table of Contents
 
-  * [Installation](#intallation)
-    * [Adding the package](#adding-the-package)
-      * [npm](#npm)
-      * [yarn](#yarn)
-    * [Manipulating codes in your project](#manipulating-codes-in-your-project)
+  - [Installation](#intallation)
+    - [Adding the package](#adding-the-package)
+      - [npm](#npm)
+      - [yarn](#yarn)
+    - [Manipulating codes in your project](#manipulating-codes-in-your-project)
 
 ## Installation
 
@@ -132,3 +132,4 @@ $ npm install react-native-alarm-manager
 ## License
 
 [MIT](LICENSE)
+- [Installation](#intallation)

@@ -18,13 +18,14 @@ Alarm manager for React Native
       - [Overriding MainActivity Methods](#overriding-mainactivity-methods)
       - [Create resource directory](#create-resource-directory)
   - [Usage](#usage)
+    - [Props](#props)
     - [Alarm Scheduling](#alarm-scheduling)
     - [Alarm Searching](#alarm-searching)
       - [One](#one)
       - [All](#all)
     - [Alarm Modifying](#alarm-modifying)
     - [Alarm Deleting](#alarm-deleting)
-    - [Alarm Stoping](#alarm-stoping)
+    - [Alarm Stopping](#alarm-stopping)
   - [Example](#example)
   - [License](#license)
 
@@ -57,7 +58,7 @@ Android SDK Platform 29 must be installed.
 
 Go to AndroidManifest.xml and register the service and receiver.
 
-```
+```xml
 <manifest ... >
     <application ... >
       <activity ... >
@@ -122,13 +123,18 @@ project/app/src/main/res/raw       // alarm sound
 project/app/src/main/res/drawable  // notification icon
 ```
 
-## a
+## Usage
 
-![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) |
---- |
-1 |
+### Props
 
-## b
+| Prop                              | Description                                                                                                                                                                                                                                                                                                             | Default                     |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| **`auto_cancel`**                 | Make this notification automatically dismissed when the user touches it. `[boolean]`                                                                                                                                                                                                                                    | `true`                      |
+| **`channel (Android only)`**      | **Required:** - Specifies the channel the notification should be delivered on.. `[string]`                                                                                                                                                                                                                              | `"my_channel_id"`           |
+
+
+
+### Alarm Scheduling
 
 Using npm:
 
@@ -136,14 +142,24 @@ Using npm:
 $ npm install react-native-alarm-manager
 ```
 
-## c
+### Alarm Searching
 
-### test
+#### One
+
+#### All
+
+### Alarm Modifying
+
+### Alarm Deleting
+
+### Alarm Stopping
 
 ```js
 // testtest
 ```
 
-## License
+## Example
 
 [MIT](LICENSE)
+
+## License

@@ -127,12 +127,9 @@ project/app/src/main/res/drawable  // notification icon
 
 ### Props
 
-| Prop                              | Description                                                                                                                                                                                                                                                                                                             | Default                     |
+| Prop                              | Type                     | Description                                                                                                                                                                                                                                                                                                             |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| **`auto_cancel`**                 | Make this notification automatically dismissed when the user touches it. `[boolean]`                                                                                                                                                                                                                                    | `true`                      |
-| **`channel (Android only)`**      | **Required:** - Specifies the channel the notification should be delivered on.. `[string]`                                                                                                                                                                                                                              | `"my_channel_id"`           |
-
-
+| **alarm_title**                 |String                      | alarm title                                                                                                                                                                                                                                    |
 
 ### Alarm Scheduling
 

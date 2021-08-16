@@ -62,9 +62,10 @@ Go to AndroidManifest.xml and register the service and receiver.
 </manifest>
 ```
 
-#### (3) MainActivity
+#### (3) Overriding MainActivity Methods
 
-Go to MainActivity.java and override the onCreate and createReactActivityDelegate methods as follows.
+Go to MainActivity.java and override the onCreate and createReactActivityDelegate methods as follows.  
+It can work properly during the process of calling parameters and rebooting the android with alarm functions.
 
 ```java
 @Override

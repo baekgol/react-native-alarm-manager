@@ -17,6 +17,17 @@ Alarm manager for React Native
       - [Register components](#register-components)
       - [Overriding MainActivity Methods](#overriding-mainactivity-methods)
       - [Create resource directory](#create-resource-directory)
+  - [Usage](#usage)
+    - [Alarm Scheduling](#alarm-scheduling)
+    - [Alarm Searching](#alarm-searching)
+      - [One](#one)
+      - [All](#all)
+    - [Alarm Modifying](#alarm-modifying)
+    - [Alarm Deleting](#alarm-deleting)
+    - [Alarm Stoping](#alarm-stoping)
+  - [Example](#example)
+  - [License](#license)
+
 
 ## Installation
 

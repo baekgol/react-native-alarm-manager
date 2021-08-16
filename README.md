@@ -8,11 +8,11 @@ Alarm manager for React Native
 
 ## Table of Contents
 
-  - [Installation](#intallation)
-    - [Adding the package](#installation-1)
-      - [npm](#installation-1-1)
-      - [yarn](#installation-1-2)
-    - [Manipulating codes in your project](#installation-2)
+  * [Installation](#intallation)
+    * [Adding the package](#installation-1)
+      * [npm](#installation-1-1)
+      * [yarn](#installation-1-2)
+    * [Manipulating codes in your project](#installation-2)
 
 ## Installation
 

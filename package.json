@@ -1,6 +1,6 @@
 {
   "name": "react-native-alarm-manager",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Alarm manager for React Native",
   "main": "index.js",
   "scripts": {

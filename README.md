@@ -187,7 +187,7 @@ Alarm.schedule(
 
 ## Example
 
-Example will update soon!!!
+Example will update soon !
 
 ## License
 

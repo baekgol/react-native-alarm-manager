@@ -127,9 +127,18 @@ project/app/src/main/res/drawable  // notification icon
 
 ### Props
 
-| Prop                              | Type                     | Description                                                                                                                                                                                                                                                                                                             |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| **alarm_title**                 |String                      | alarm title                                                                                                                                                                                                                                    |
+|Prop|Type|Description|Note|
+|-|:-:|-|:-:|
+|**alarm_id**|Number|Unique value of an alarm|Auto Increment|
+|**alarm_time**|String|Value to set the alarm time|HH:mm:00|
+|**alarm_title**|String|alarm title||
+|**alarm_text**|String|alarm title||
+|**alarm_sound**|String|alarm title||
+|**alarm_icon**|String|alarm title||
+|**alarm_sound_loop**|Boolean|alarm title||
+|**alarm_vibration**|Boolean|alarm title||
+|**alarm_noti_removable**|Boolean|alarm title||
+|**alarm_activate**|Boolean|alarm title||
 
 ### Alarm Scheduling
 

@@ -128,7 +128,7 @@ project/app/src/main/res/drawable  // notification icon
 ### Props
 
 |Prop|Type|Description|Note|
-|-|:-:|-|:-:|
+|-|:-:|-|-|
 |**alarm_id**|Number|Unique value of an alarm|Auto Increment|
 |**alarm_time**|String|The value to set the alarm time|HH:mm:00|
 |**alarm_title**|String|Title of notification|Nullable|

@@ -125,6 +125,12 @@ project/app/src/main/res/drawable  // notification icon
 
 ## Usage
 
+First, import the module to use the alarm function.
+
+```javascript
+import Alarm from 'react-native-alarm-manager';
+```
+
 ### Props
 
 |Prop|Type|Description|Note|
@@ -142,10 +148,29 @@ project/app/src/main/res/drawable  // notification icon
 
 ### Alarm Scheduling
 
-Using npm:
+Make sure that alarm_time must be in HH:mm:00 format.
+* Hour(00 ~ 23)
+* Minute(00 ~ 59)
+* Second(00)
 
-```bash
-$ npm install react-native-alarm-manager
+```javascript
+const alarm = {
+  alarm_time: 12:30:00, // HH:mm:00
+  alarm_title: 'title',
+  alarm_text: 'text',
+  alarm_sound: 'sound', // sound.mp3
+  alarm_icon: 'icon',   // icon.png
+  alarm_sound_loop: true,
+  alarm_vibration: true,
+  alarm_noti_removable: true,
+  alarm_activate: true
+};
+
+Alarm.schedule(
+  alarm,
+  success => console.log(success);,
+  fail => console.log(fail);,
+);
 ```
 
 ### Alarm Searching
@@ -160,12 +185,10 @@ $ npm install react-native-alarm-manager
 
 ### Alarm Stopping
 
-```js
-// testtest
-```
-
 ## Example
 
-[MIT](LICENSE)
+Example will update soon!!!
 
 ## License
+
+[MIT](LICENSE)

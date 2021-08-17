@@ -130,14 +130,14 @@ project/app/src/main/res/drawable  // notification icon
 |Prop|Type|Description|Note|
 |-|-|-|-|
 |**alarm_id**|Number|Unique value of an alarm|Auto Increment|
-|**alarm_time**|String|The value to set the alarm time|HH:mm:00|
+|**alarm_time**|String|Value to set the alarm time|HH:mm:00|
 |**alarm_title**|String|Title of notification|Nullable|
 |**alarm_text**|String|Text of notification|Nullable|
 |**alarm_sound**|String|Sound that rings when the alarm is activated|Exclude file extensions|
 |**alarm_icon**|String|Icon of notification|Exclude file extensions|
-|**alarm_sound_loop**|Boolean|The value to set whether the alarm sounds repeatedly|Default: true|
-|**alarm_vibration**|Boolean|The value to set whether the alarm will vibrate when it is activated.|Default: true|
-|**alarm_noti_removable**|Boolean|The value to set whether to end the alarm when an notification is clicked|Default: true|
+|**alarm_sound_loop**|Boolean|Value to set whether the alarm sounds repeatedly|Default: true|
+|**alarm_vibration**|Boolean|Value to set whether the alarm will vibrate when it is activated.|Default: true|
+|**alarm_noti_removable**|Boolean|Value to set whether to end the alarm when an notification is clicked|Default: true|
 |**alarm_activate**|Boolean|Value to set whether to activate the alarm|Default: true|
 
 ### Alarm Scheduling

@@ -155,11 +155,11 @@ Make sure that alarm_time must be in HH:mm:00 format.
 
 ```javascript
 const alarm = {
-  alarm_time: 12:30:00, // HH:mm:00
+  alarm_time: 12:30:00,   // HH:mm:00
   alarm_title: 'title',
   alarm_text: 'text',
-  alarm_sound: 'sound', // sound.mp3
-  alarm_icon: 'icon',   // icon.png
+  alarm_sound: 'sound',   // sound.mp3
+  alarm_icon: 'icon',     // icon.png
   alarm_sound_loop: true,
   alarm_vibration: true,
   alarm_noti_removable: true,
@@ -179,7 +179,7 @@ Alarm searching is provided in two ways.
 
 #### One
 
-This searches for an alarm.  
+It searches for an alarm.  
 You can access the alarm_id to obtain alarm information for that ID.
 
 ```javascript
@@ -192,7 +192,7 @@ Alarm.search(
 
 #### All
 
-This searches for all alarms.
+It searches for all alarms.
 
 ```javascript
 Alarm.searchAll(
@@ -202,6 +202,31 @@ Alarm.searchAll(
 ```
 
 ### Alarm Modifying
+
+It is almost identical to alarm scheduling, but must be given alarm_id.  
+Alarm information for that ID will be changed.  
+If you want an alarm toggle, just change the alarm_activate.
+
+```javascript
+const alarm = {
+  alarm_id: 3,
+  alarm_time: 15:27:00,   // HH:mm:00
+  alarm_title: 'title modify',
+  alarm_text: 'text modify',
+  alarm_sound: 'sound3',  // sound.mp3
+  alarm_icon: 'icon2',    // icon.png
+  alarm_sound_loop: false,
+  alarm_vibration: true,
+  alarm_noti_removable: false,
+  alarm_activate: true    // value for alarm toggle
+};
+
+Alarm.modify(
+  alarm,
+  success => console.log(success),  // success message
+  fail => console.log(fail)         // fail message
+);
+```
 
 ### Alarm Deleting
 

@@ -148,6 +148,7 @@ import Alarm from 'react-native-alarm-manager';
 
 ### Alarm Scheduling
 
+This schedules an alarm.
 Make sure that alarm_time must be in HH:mm:00 format.
 * Hour(00 ~ 23)
 * Minute(00 ~ 59)
@@ -179,7 +180,7 @@ Alarm searching is provided in two ways.
 
 #### One
 
-It searches for an alarm.  
+This searches for an alarm.  
 You can access the alarm_id to obtain alarm information for that ID.
 
 ```javascript
@@ -192,7 +193,7 @@ Alarm.search(
 
 #### All
 
-It searches for all alarms.
+This searches for all alarms.
 
 ```javascript
 Alarm.searchAll(
@@ -203,7 +204,7 @@ Alarm.searchAll(
 
 ### Alarm Modifying
 
-It is almost identical to alarm scheduling, but must be given alarm_id.  
+This is almost identical to alarm scheduling, but must be additionally given alarm_id.    
 Alarm information for that ID will be changed.  
 If you want an alarm toggle, just change the alarm_activate.
 
@@ -230,7 +231,28 @@ Alarm.modify(
 
 ### Alarm Deleting
 
+This deletes the alarm that is scheduled.  
+This also automatically cancels the alarm schedule.
+
+```javascript
+Alarm.delete(
+  id,
+  success => console.log(success),  // success message
+  fail => console.log(fail)         // fail message
+);
+```
+
 ### Alarm Stopping
+
+This turns off the alarm.  
+This means that the sound stops and the notification disappears.
+
+```javascript
+Alarm.stop(
+  success => console.log(success),  // success message
+  fail => console.log(fail)         // fail message
+);
+```
 
 ## Example
 

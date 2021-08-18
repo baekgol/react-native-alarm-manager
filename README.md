@@ -231,7 +231,7 @@ Alarm.modify(
 
 ### Alarm Deleting
 
-This deletes the alarm that is scheduled.  
+This deletes the alarm for that ID.  
 This also automatically cancels the alarm schedule.
 
 ```javascript

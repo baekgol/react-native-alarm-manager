@@ -168,16 +168,38 @@ const alarm = {
 
 Alarm.schedule(
   alarm,
-  success => console.log(success);,
-  fail => console.log(fail);,
+  success => console.log(success),  // success message
+  fail => console.log(fail)         // fail message
 );
 ```
 
 ### Alarm Searching
 
+Alarm searching is provided in two ways.
+
 #### One
 
+This searches for an alarm.  
+You can access the alarm_id to obtain alarm information for that ID.
+
+```javascript
+Alarm.search(
+  id,
+  success => console.log(success),  // alarm
+  fail => console.log(fail)         // fail message
+);
+```
+
 #### All
+
+This searches for all alarms.
+
+```javascript
+Alarm.searchAll(
+  success => console.log(success),  // alarm list
+  fail => console.log(fail)         // fail message
+);
+```
 
 ### Alarm Modifying
 

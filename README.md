@@ -256,7 +256,7 @@ Alarm.stop(
 
 ## Example
 
-Example will update soon !
+Example will update soon!
 
 ## License
 

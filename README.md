@@ -13,9 +13,9 @@ Alarm manager for React Native
       - [npm](#npm)
       - [yarn](#yarn)
     - [Manipulating codes in your project](#manipulating-codes-in-your-project)
-      - [Check Android SDK](#check-android-sdk)
+      - [Check android SDK](#check-android-sdk)
       - [Register components](#register-components)
-      - [Overriding MainActivity Methods](#overriding-mainactivity-methods)
+      - [Overriding MainActivity methods](#overriding-mainactivity-methods)
       - [Create resource directory](#create-resource-directory)
   - [Usage](#usage)
     - [Props](#props)
@@ -48,7 +48,7 @@ $ yarn add react-native-alarm-manager
 
 ### Manipulating codes in your project
 
-#### Check Android SDK
+#### Check android SDK
 
 This package is compiled with Android SDK Platform 29.  
 Your project SDK version doesn't matter.  
@@ -77,7 +77,7 @@ Go to AndroidManifest.xml and register the service and receiver.
 </manifest>
 ```
 
-#### Overriding MainActivity Methods
+#### Overriding MainActivity methods
 
 Go to MainActivity.java and override the onCreate and createReactActivityDelegate methods as follows.  
 It can work properly during the process of calling parameters and rebooting the android with alarm functions.
@@ -256,7 +256,7 @@ Alarm.stop(
 
 ## Example
 
-Example will update soon !
+Example will update soon!
 
 ## License
 

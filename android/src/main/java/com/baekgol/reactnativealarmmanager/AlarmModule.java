@@ -305,10 +305,10 @@ public class AlarmModule extends ReactContextBaseJavaModule {
 
     try{
       thread.join();
-      success.invoke("Alarm stoping was successful.");
+      success.invoke("Alarm stopping was successful.");
     } catch (InterruptedException e) {
       e.printStackTrace();
-      fail.invoke("An error occurred while stoping the alarm.");
+      fail.invoke("An error occurred while stopping the alarm.");
     }
   }
 

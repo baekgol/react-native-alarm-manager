@@ -6134,10 +6134,10 @@ react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-alarm-manager@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-alarm-manager/-/react-native-alarm-manager-1.0.4.tgz#353ee8aa5d450336a2c8efadbc22c4166db3f519"
-  integrity sha512-NnfuxBh3CtjxIiwNvSK/1bqFOTsFTm+sEcyDlUiavXTsAvEr2KXCHI9N7YIG5vGhWGmSqZVhsIpW110VwpDTJQ==
+react-native-alarm-manager@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-alarm-manager/-/react-native-alarm-manager-1.0.5.tgz#07e6e67c4a134a7de3b613a5a870be0390165f4c"
+  integrity sha512-DrC/Kn/Y/f7E7jeVAdRMj+L2GsXLkWGVm67HlHgOezUd0LjI1Y3HA9ThT5Y+x6XC2TPC9Y6OoqIlzJqG4Qb4cQ==
 
 react-native-codegen@^0.0.6:
   version "0.0.6"

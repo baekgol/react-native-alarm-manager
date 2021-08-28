@@ -27,6 +27,12 @@ Alarm manager for React Native
     - [Alarm Deleting](#alarm-deleting)
     - [Alarm Stopping](#alarm-stopping)
   - [Example](#example)
+    - [Alarm scheduling from the main page](#alarm-scheduling-from-the-main-page)
+    - [Alarm searching from the top toolbar](#alarm-searching-from-the-top-toolbar)
+    - [Alarm modifying from the alarm list](#alarm-modifying-from-the-alarm-list)
+    - [Alarm deleting from the alarm list](#alarm-deleting-from-the-alarm-list)
+    - [Alarm toggling from the alarm list](#alarm-toggling-from-the-alarm-list)
+    - [Alarm stopping after activation](#alarm-stopping-after-activation)
   - [License](#license)
 
 
@@ -256,7 +262,29 @@ Alarm.stop(
 
 ## Example
 
-Example will update soon!
+### Alarm scheduling from the main page
+
+![alarm-scheduling](images/alarm-scheduling.gif)
+
+### Alarm searching from the top toolbar
+
+![alarm-searching](images/alarm-searching.gif)
+
+### Alarm modifying from the alarm list
+
+![alarm-modifying](images/alarm-modifying.gif)
+
+### Alarm deleting from the alarm list
+
+![alarm-deleting](images/alarm-deleting.gif)
+
+### Alarm toggling from the alarm list
+
+![alarm-toggling](images/alarm-toggling.gif)
+
+### Alarm stopping after activation
+
+![alarm-stopping](images/alarm-stopping.gif)
 
 ## License
 

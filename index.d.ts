@@ -6,7 +6,6 @@ declare module "react-native-alarm-manager" {
     alarm_time: string;
     alarm_title: string;
     alarm_text: string;
-    alarm_expandable_content: string;
     alarm_sound: string;
     alarm_icon: string;
     alarm_sound_loop: boolean;

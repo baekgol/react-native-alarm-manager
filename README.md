@@ -260,6 +260,52 @@ Alarm.stop(
 );
 ```
 
+## Typescript 
+Typescript declaration types has been added in version 1.2.0, it provides a set of convenient types that can be used while writing a typescript RN app.
+
+```typescript
+import Alarm, {AlarmScheduleType} from 'react-native-alarm-manager';
+
+const alarm: AlarmScheduleType = {
+  alarm_time: '15:27:00', // HH:mm:00
+  alarm_title: 'title',
+  alarm_text: 'text',
+  alarm_sound: 'sound', // sound.mp3
+  alarm_icon: 'icon', // icon.png
+  alarm_sound_loop: false,
+  alarm_vibration: true,
+  alarm_noti_removable: false,
+  alarm_activate: true, // value for alarm toggle
+};
+
+Alarm.schedule(
+  alarm,
+  success => console.log(success),
+  fail => console.log(fail),
+);
+```
+```typescript
+import Alarm, {AlarmType} from 'react-native-alarm-manager';
+
+const alarm: AlarmType = {
+  alarm_id: 3,
+  alarm_time: '15:27:00', // HH:mm:ss
+  alarm_title: 'title modify',
+  alarm_text: 'text modify',
+  alarm_sound: 'sound3', // sound3.mp3
+  alarm_icon: 'icon2', // icon2.png
+  alarm_sound_loop: false,
+  alarm_vibration: true,
+  alarm_noti_removable: false,
+  alarm_activate: true, // value for alarm toggle
+};
+
+Alarm.modify(
+  alarm,
+  success => console.log(success),
+  fail => console.log(fail),
+);
+```
 ## Example
 
 ### Alarm scheduling from the main page

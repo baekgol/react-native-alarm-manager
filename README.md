@@ -26,6 +26,7 @@ Alarm manager for React Native
     - [Alarm Modifying](#alarm-modifying)
     - [Alarm Deleting](#alarm-deleting)
     - [Alarm Stopping](#alarm-stopping)
+  - [Typescript](#typescript)
   - [Example](#example)
     - [Alarm scheduling from the main page](#alarm-scheduling-from-the-main-page)
     - [Alarm searching from the top toolbar](#alarm-searching-from-the-top-toolbar)

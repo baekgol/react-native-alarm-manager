@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 
 import java.sql.Time;
+import java.time.LocalDate;
 
 import com.baekgol.reactnativealarmmanager.db.Database;
 import com.baekgol.reactnativealarmmanager.model.AlarmDto;
@@ -68,8 +69,8 @@ public class AlarmModule extends ReactContextBaseJavaModule {
       @Override
       public void run() {
         Database db = Database.getInstance(getReactApplicationContext());
-        AlarmDto newAlarm = createAlarm(rm, false);
-        AlarmDto existedAlarm = db.alarmDao().search(newAlarm.getAlarmTime());
+        AlarmDto newAlarm = createAlarm(rm, true);
+        AlarmDto existedAlarm = db.alarmDao().search(newAlarm.getAlarmId());
 
         if(existedAlarm==null){
           long alarmId = db.alarmDao().add(newAlarm);
@@ -80,20 +81,24 @@ public class AlarmModule extends ReactContextBaseJavaModule {
           int hour = Integer.parseInt(timeInfo[0]);
           int minute = Integer.parseInt(timeInfo[1]);
           int second = Integer.parseInt(timeInfo[2]);
+          // new
+          Calendar currentCalendar = Calendar.getInstance();
+          currentCalendar.setTimeInMillis(System.currentTimeMillis());
 
-          Calendar calendar = Calendar.getInstance();
-          calendar.setTimeInMillis(System.currentTimeMillis());
+          String alarmText = alarm.getAlarmText();
+          String[] alarmTextInfo = alarmText.split(" ");
+          LocalDate alarmDate = LocalDate.parse(alarmTextInfo[3]);
 
-          int currHour = calendar.get(Calendar.HOUR_OF_DAY);
-          int currMinute = calendar.get(Calendar.MINUTE);
-          int currSecond = calendar.get(Calendar.SECOND);
+          Calendar alarmCalender = Calendar.getInstance();
+          alarmCalender.set(Calendar.YEAR, alarmDate.getYear());
+          alarmCalender.set(Calendar.MONTH, alarmDate.getMonthValue() - 1);
+          alarmCalender.set(Calendar.DAY_OF_MONTH, alarmDate.getDayOfMonth());
+          alarmCalender.set(Calendar.HOUR_OF_DAY, hour);
+          alarmCalender.set(Calendar.MINUTE, minute);
+          alarmCalender.set(Calendar.SECOND, 0);
 
-          calendar.set(Calendar.HOUR_OF_DAY, hour);
-          calendar.set(Calendar.MINUTE, minute);
-          calendar.set(Calendar.SECOND, 0);
-
-          if(hour<currHour || (hour==currHour && minute<currMinute) || (hour==currHour && minute==currMinute && second<currSecond))
-            calendar.setTimeInMillis(calendar.getTimeInMillis() + (1000*60*60*24));
+          long timeDifferenceMillis = alarmCalender.getTimeInMillis() - currentCalendar.getTimeInMillis();
+          alarmCalender.setTimeInMillis(currentCalendar.getTimeInMillis() + timeDifferenceMillis);
 
           Intent alarmIntent = new Intent(reactContext, AlarmReceiver.class);
           alarmIntent.putExtra("id", alarm.getAlarmId());
@@ -108,7 +113,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
           alarmIntent.putExtra("notiRemovable", alarm.isAlarmNotiRemovable());
 
           PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(reactContext, alarm.getAlarmId(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-          alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);
+          alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmCalender.getTimeInMillis(), alarmPendingIntent);
         }
       }
     };
@@ -205,20 +210,24 @@ public class AlarmModule extends ReactContextBaseJavaModule {
             int hour = Integer.parseInt(timeInfo[0]);
             int minute = Integer.parseInt(timeInfo[1]);
             int second = Integer.parseInt(timeInfo[2]);
+            // new
+            Calendar currentCalendar = Calendar.getInstance();
+            currentCalendar.setTimeInMillis(System.currentTimeMillis());
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
+            String alarmText = newAlarm.getAlarmText();
+            String[] alarmTextInfo = alarmText.split(" ");
+            LocalDate alarmDate = LocalDate.parse(alarmTextInfo[3]);
 
-            int currHour = calendar.get(Calendar.HOUR_OF_DAY);
-            int currMinute = calendar.get(Calendar.MINUTE);
-            int currSecond = calendar.get(Calendar.SECOND);
+            Calendar alarmCalender = Calendar.getInstance();
+            alarmCalender.set(Calendar.YEAR, alarmDate.getYear());
+            alarmCalender.set(Calendar.MONTH, alarmDate.getMonthValue() - 1);
+            alarmCalender.set(Calendar.DAY_OF_MONTH, alarmDate.getDayOfMonth());
+            alarmCalender.set(Calendar.HOUR_OF_DAY, hour);
+            alarmCalender.set(Calendar.MINUTE, minute);
+            alarmCalender.set(Calendar.SECOND, 0);
 
-            calendar.set(Calendar.HOUR_OF_DAY, hour);
-            calendar.set(Calendar.MINUTE, minute);
-            calendar.set(Calendar.SECOND, 0);
-
-            if(hour<currHour || (hour==currHour && minute<currMinute) || (hour==currHour && minute==currMinute && second<currSecond))
-              calendar.setTimeInMillis(calendar.getTimeInMillis() + (1000*60*60*24));
+            long timeDifferenceMillis = alarmCalender.getTimeInMillis() - currentCalendar.getTimeInMillis();
+            alarmCalender.setTimeInMillis(currentCalendar.getTimeInMillis() + timeDifferenceMillis);
 
             Intent alarmIntent = new Intent(reactContext, AlarmReceiver.class);
             alarmIntent.putExtra("id", newAlarm.getAlarmId());
@@ -233,7 +242,7 @@ public class AlarmModule extends ReactContextBaseJavaModule {
             alarmIntent.putExtra("notiRemovable", newAlarm.isAlarmNotiRemovable());
 
             alarmPendingIntent = PendingIntent.getBroadcast(reactContext, newAlarm.getAlarmId(), alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmCalender.getTimeInMillis(), alarmPendingIntent);
           }
         }
       }
@@ -362,9 +371,16 @@ public class AlarmModule extends ReactContextBaseJavaModule {
     AlarmDto newAlarm = new AlarmDto();
 
     if(isModify) newAlarm.setAlarmId(rm.getInt("alarm_id"));
-    newAlarm.setAlarmTime(Time.valueOf(rm.getString("alarm_time")));
+    //new
+    String alarmDateTime = rm.getString("alarm_time"); // New attribute for date and time
+    String[] dateTimeInfo = alarmDateTime.split(" "); 
+    LocalDate localDate = LocalDate.parse(dateTimeInfo[1]);
+    String alarmText = rm.getString("alarm_text") + " " + (localDate != null ? localDate : ""); 
+    //end new
+
+    newAlarm.setAlarmTime(Time.valueOf(dateTimeInfo[0]));
     newAlarm.setAlarmTitle(rm.getString("alarm_title"));
-    newAlarm.setAlarmText(rm.getString("alarm_text"));
+    newAlarm.setAlarmText(alarmText);
     newAlarm.setAlarmSound(rm.getString("alarm_sound"));
     newAlarm.setAlarmIcon(rm.getString("alarm_icon"));
     newAlarm.setAlarmSoundLoop(rm.getBoolean("alarm_sound_loop"));

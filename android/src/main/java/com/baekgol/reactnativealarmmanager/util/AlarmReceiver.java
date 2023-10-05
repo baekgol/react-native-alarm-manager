@@ -27,17 +27,5 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmServiceIntent.putExtra("notiRemovable", intent.getBooleanExtra("notiRemovable", true));
 
         context.startForegroundService(alarmServiceIntent);
-        scheduleNextAlarm(context, intent);
-    }
-
-    private void scheduleNextAlarm(Context context, Intent intent) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis() + (1000*60*60*24));
-        calendar.set(Calendar.HOUR_OF_DAY, intent.getIntExtra("hour", 1));
-        calendar.set(Calendar.MINUTE, intent.getIntExtra("minute", 1));
-        calendar.set(Calendar.SECOND, 0);
-
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, intent.getIntExtra("id", 0), intent, PendingIntent.FLAG_NO_CREATE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmPendingIntent);
     }
 }

@@ -8,6 +8,8 @@ Alarm manager for React Native
 
 ## Table of Contents
 
+- [react-native-alarm-manager](#react-native-alarm-manager)
+  - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
     - [Adding the package](#adding-the-package)
       - [npm](#npm)
@@ -143,7 +145,7 @@ import Alarm from 'react-native-alarm-manager';
 |Prop|Type|Description|Note|
 |-|-|-|-|
 |**alarm_id**|Number|Unique value of an alarm.|Auto Increment|
-|**alarm_time**|String|Value to set the alarm time.|HH:mm:00|
+|**alarm_time**|String|Value to set the alarm time and a specific date.|HH:mm:00 yyyy-MM-dd|
 |**alarm_title**|String|Title of notification.|Nullable|
 |**alarm_text**|String|Text of notification.|Nullable|
 |**alarm_sound**|String|Sound that rings when the alarm is activated.|Exclude file extensions|
@@ -163,7 +165,7 @@ Make sure that alarm_time must be in HH:mm:00 format.
 
 ```javascript
 const alarm = {
-  alarm_time: 12:30:00,   // HH:mm:00
+  alarm_time: '12:30:00 2023-10-16',   // HH:mm:00 yyyy-MM-dd
   alarm_title: 'title',
   alarm_text: 'text',
   alarm_sound: 'sound',   // sound.mp3
@@ -218,7 +220,7 @@ If you want an alarm toggle, just change the alarm_activate.
 ```javascript
 const alarm = {
   alarm_id: 3,
-  alarm_time: 15:27:00,   // HH:mm:00
+  alarm_time: '15:27:00 2023-10-16',   // HH:mm:00 yyyy-MM-dd
   alarm_title: 'title modify',
   alarm_text: 'text modify',
   alarm_sound: 'sound3',  // sound.mp3
@@ -268,7 +270,7 @@ Typescript declaration types has been added in version 1.2.0, it provides a set 
 import Alarm, {AlarmScheduleType} from 'react-native-alarm-manager';
 
 const alarm: AlarmScheduleType = {
-  alarm_time: '15:27:00', // HH:mm:00
+  alarm_time: '15:27:00 2023-10-16', // HH:mm:00 yyyy-MM-dd
   alarm_title: 'title',
   alarm_text: 'text',
   alarm_sound: 'sound', // sound.mp3
@@ -290,7 +292,7 @@ import Alarm, {AlarmType} from 'react-native-alarm-manager';
 
 const alarm: AlarmType = {
   alarm_id: 3,
-  alarm_time: '15:27:00', // HH:mm:ss
+  alarm_time: '15:27:00 2023-10-16', // HH:mm:00 yyyy-MM-dd
   alarm_title: 'title modify',
   alarm_text: 'text modify',
   alarm_sound: 'sound3', // sound3.mp3
